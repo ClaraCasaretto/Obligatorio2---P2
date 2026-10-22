@@ -4,6 +4,86 @@
 */
 package Dominio;
 
+import java.util.ArrayList;
+
 public class Sistema {
+    private ArrayList<Animal>listaAnimales;
+    private ArrayList<Familia> listaFamilias;
+    private ArrayList<Empresa> listaEmpresas;
+    private ArrayList<Adopcion> listaAdopciones;
+    private int contadorAdopcion;
+    private ArrayList<Donacion> listaDonaciones;
+    private int contadorDonacion;
+
+    public Sistema() {
+        this.listaAnimales =  new ArrayList<Animal>();
+        this.listaFamilias = new ArrayList<Familia>();
+        this.listaEmpresas = new ArrayList<Empresa>();
+        this.listaAdopciones = new ArrayList<Adopcion>();
+        this.contadorAdopcion = 1;
+        this.listaDonaciones = new ArrayList<Donacion>();
+        this.contadorDonacion = 1;
+    }
+
+    public ArrayList<Animal> getListaAnimales() {
+        return listaAnimales;
+    }
+
+    public void setListaAnimales(ArrayList<Animal> listaAnimales) {
+        this.listaAnimales = listaAnimales;
+    }
+
+    public ArrayList<Familia> getListaFamilias() {
+        return listaFamilias;
+    }
+
+    public void setListaFamilias(ArrayList<Familia> listaFamilias) {
+        this.listaFamilias = listaFamilias;
+    }
+
+    public ArrayList<Empresa> getListaEmpresas() {
+        return listaEmpresas;
+    }
+
+    public void setListaEmpresas(ArrayList<Empresa> listaEmpresas) {
+        this.listaEmpresas = listaEmpresas;
+    }
+
+    public ArrayList<Adopcion> getListaAdopciones() {
+        return listaAdopciones;
+    }
+
+    public void setListaAdopciones(ArrayList<Adopcion> listaAdopciones) {
+        this.listaAdopciones = listaAdopciones;
+    }
+
+    public int getContadorAdopcion() {
+        return contadorAdopcion;
+    }
+
+    public void setContadorAdopcion(int contadorAdopcion) {
+        this.contadorAdopcion = contadorAdopcion;
+    }
+
+    public ArrayList<Donacion> getListaDonaciones() {
+        return listaDonaciones;
+    }
+
+    public void setListaDonaciones(ArrayList<Donacion> listaDonaciones) {
+        this.listaDonaciones = listaDonaciones;
+    }
+
+    public int getContadorDonacion() {
+        return contadorDonacion;
+    }
+
+    public void setContadorDonacion(int contadorDonacion) {
+        this.contadorDonacion = contadorDonacion;
+    }
+    
+    
+    
+    
+    
     
 }
