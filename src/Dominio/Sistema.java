@@ -32,6 +32,16 @@ public class Sistema {
     public void setListaAnimales(ArrayList<Animal> listaAnimales) {
         this.listaAnimales = listaAnimales;
     }
+    
+    public boolean existeCodigoAnimal(String unCodigo){
+        boolean existe = false;
+        for (int i = 0; i < listaAnimales.size(); i++) {
+            if(listaAnimales.get(i).getCodigo().equals(unCodigo)){
+                existe = true;
+            }
+        }
+        return existe;
+    }
 
     public ArrayList<Familia> getListaFamilias() {
         return listaFamilias;
