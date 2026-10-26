@@ -133,10 +133,28 @@ public class VentanaAnimal extends javax.swing.JFrame {
         ||textField_Peso.getText().trim().equals("")) {
             
             lable_alerta.setText("Complete todas las casillas");
+            
         }else if(sistema.existeCodigoAnimal(textField_Codigo.getText().trim())){
             lable_alerta.setText("Ya existe un animal con ese código");
             textField_Codigo.setText("");
-        }        
+        }//validar alfanumerico
+        
+        else if (comboBox_Estado.getSelectedItem().toString().trim().equals("")) {
+            lable_alerta.setText("Seleccione un estado");
+        }
+        else if (comboBox_Estado.getSelectedItem().toString().equals("Entregado a familia")) {
+            lable_alerta.setText("No puede registrar un animal como entregado");
+        }
+        else {
+            try {
+                double peso = Double.parseDouble(textField_Peso.getText().trim());
+                if (peso <= 0) {
+                    lable_alerta.setText("El peso debe ser mayor a 0");
+                }
+            } catch (NumberFormatException e) {
+                lable_alerta.setText("El peso debe ser un número válido");
+            }
+}
     }//GEN-LAST:event_button_AgregarActionPerformed
 
     public static void main(String args[]) {
