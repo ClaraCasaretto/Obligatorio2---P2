@@ -42,6 +42,10 @@ public class Sistema {
         }
         return existe;
     }
+    
+    public void agregarAnimal(Animal unAnimal) {
+        listaAnimales.add(unAnimal);
+    }
 
     public ArrayList<Familia> getListaFamilias() {
         return listaFamilias;

@@ -12,6 +12,11 @@ public class VentanaAnimal extends javax.swing.JFrame {
     private Animal animal;
     private Sistema sistema;
 
+    public VentanaAnimal() {
+        sistema = new Sistema();
+        initComponents();
+    }
+    
     public VentanaAnimal(Sistema unSistema) {
         sistema = unSistema;
         initComponents();
@@ -51,53 +56,53 @@ public class VentanaAnimal extends javax.swing.JFrame {
 
         label_Codigo.setText("Código:");
         jPanel1.add(label_Codigo);
-        label_Codigo.setBounds(40, 60, 50, 16);
+        label_Codigo.setBounds(30, 50, 60, 16);
 
         textField_Codigo.addActionListener(this::textField_CodigoActionPerformed);
         jPanel1.add(textField_Codigo);
-        textField_Codigo.setBounds(130, 60, 220, 22);
+        textField_Codigo.setBounds(130, 50, 220, 22);
 
         label_Nombre.setText("Nombre:");
         jPanel1.add(label_Nombre);
-        label_Nombre.setBounds(40, 90, 60, 16);
+        label_Nombre.setBounds(30, 80, 70, 16);
 
         textField_Nombre.addActionListener(this::textField_NombreActionPerformed);
         jPanel1.add(textField_Nombre);
-        textField_Nombre.setBounds(130, 90, 220, 22);
+        textField_Nombre.setBounds(130, 80, 220, 22);
 
         label_Temperamento.setText("Temperamento:");
         jPanel1.add(label_Temperamento);
-        label_Temperamento.setBounds(40, 120, 90, 16);
+        label_Temperamento.setBounds(30, 110, 100, 16);
 
         textField_Temperamento.addActionListener(this::textField_TemperamentoActionPerformed);
         jPanel1.add(textField_Temperamento);
-        textField_Temperamento.setBounds(130, 120, 220, 22);
+        textField_Temperamento.setBounds(130, 110, 220, 22);
 
         label_Peso.setText("Peso en Kilos:");
         jPanel1.add(label_Peso);
-        label_Peso.setBounds(40, 150, 80, 16);
+        label_Peso.setBounds(30, 140, 90, 16);
 
         textField_Peso.addActionListener(this::textField_PesoActionPerformed);
         jPanel1.add(textField_Peso);
-        textField_Peso.setBounds(130, 150, 220, 22);
+        textField_Peso.setBounds(130, 140, 220, 22);
 
         label_Estado.setText("Estado:");
         jPanel1.add(label_Estado);
-        label_Estado.setBounds(40, 180, 60, 16);
+        label_Estado.setBounds(30, 170, 70, 16);
 
         comboBox_Estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disponible para adoptar", "No disponible para adoptar", "Entregado a familia", " " }));
         comboBox_Estado.addActionListener(this::comboBox_EstadoActionPerformed);
         jPanel1.add(comboBox_Estado);
-        comboBox_Estado.setBounds(130, 180, 220, 22);
+        comboBox_Estado.setBounds(130, 170, 220, 22);
 
         button_Agregar.setText("Agregar");
         button_Agregar.addActionListener(this::button_AgregarActionPerformed);
         jPanel1.add(button_Agregar);
-        button_Agregar.setBounds(170, 230, 80, 23);
+        button_Agregar.setBounds(160, 200, 90, 23);
         button_Agregar.getAccessibleContext().setAccessibleDescription("");
 
         jPanel1.add(lable_alerta);
-        lable_alerta.setBounds(40, 260, 350, 30);
+        lable_alerta.setBounds(30, 230, 350, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 410, 300);
@@ -126,39 +131,55 @@ public class VentanaAnimal extends javax.swing.JFrame {
     }//GEN-LAST:event_comboBox_EstadoActionPerformed
 
     private void button_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_AgregarActionPerformed
-        
         if (textField_Codigo.getText().trim().equals("") 
-        ||textField_Nombre.getText().trim().equals("") 
-        ||textField_Temperamento.getText().trim().equals("") 
-        ||textField_Peso.getText().trim().equals("")) {
+            ||textField_Nombre.getText().trim().equals("") 
+            ||textField_Temperamento.getText().trim().equals("") 
+            ||textField_Peso.getText().trim().equals("")) {
             
             lable_alerta.setText("Complete todas las casillas");
             
-        }else if(sistema.existeCodigoAnimal(textField_Codigo.getText().trim())){
+        }
+        else if(sistema.existeCodigoAnimal(textField_Codigo.getText().trim())){
             lable_alerta.setText("Ya existe un animal con ese código");
             textField_Codigo.setText("");
-        }//validar alfanumerico
-        
+        }
+        else if (!textField_Codigo.getText().trim().matches("[a-zA-Z0-9]+")) {
+            lable_alerta.setText("El código debe ser alfanumérico");
+            textField_Codigo.setText("");
+        }
         else if (comboBox_Estado.getSelectedItem().toString().trim().equals("")) {
             lable_alerta.setText("Seleccione un estado");
-        }
-        else if (comboBox_Estado.getSelectedItem().toString().equals("Entregado a familia")) {
-            lable_alerta.setText("No puede registrar un animal como entregado");
         }
         else {
             try {
                 double peso = Double.parseDouble(textField_Peso.getText().trim());
                 if (peso <= 0) {
                     lable_alerta.setText("El peso debe ser mayor a 0");
+                }else{
+                    //Agregar el animal
+                    Animal animal = new Animal(
+                        textField_Codigo.getText().trim(),
+                        textField_Nombre.getText().trim(),
+                        textField_Temperamento.getText().trim(),
+                        peso,
+                        comboBox_Estado.getSelectedItem().toString()
+                    );
+                    sistema.agregarAnimal(animal);
+                    lable_alerta.setText("Animal agregado correctamente");
+                    textField_Codigo.setText("");
+                    textField_Nombre.setText("");
+                    textField_Temperamento.setText("");
+                    textField_Peso.setText("");
+                    comboBox_Estado.setSelectedIndex(0);
                 }
             } catch (NumberFormatException e) {
                 lable_alerta.setText("El peso debe ser un número válido");
             }
-}
+        }
     }//GEN-LAST:event_button_AgregarActionPerformed
 
     public static void main(String args[]) {
-        //java.awt.EventQueue.invokeLater(() -> new VentanaAnimal().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new VentanaAnimal().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
