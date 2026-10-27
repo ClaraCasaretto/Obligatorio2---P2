@@ -55,6 +55,21 @@ public class Sistema {
         this.listaFamilias = listaFamilias;
     }
 
+    public boolean existeCedulaFamilia(String unaCedula) {
+        boolean existe = false;
+        for (int i = 0; i < listaFamilias.size(); i++) {
+            if (listaFamilias.get(i).getCedula().equals(unaCedula)) {
+                existe = true;
+            }
+        }
+        return existe;
+    }
+    
+        
+    public void agregarFamilia(Familia unaFamilia) {
+        listaFamilias.add(unaFamilia);
+    }
+    
     public ArrayList<Empresa> getListaEmpresas() {
         return listaEmpresas;
     }

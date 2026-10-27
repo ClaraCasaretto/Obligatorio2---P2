@@ -4,13 +4,23 @@
 */
 package Ventanas;
 
+import Dominio.Sistema;
+import Dominio.Familia;
+
 public class VentanaFamilia extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaFamilia.class.getName());
-
+    private Familia familia;
+    private Sistema sistema;
     
     
     public VentanaFamilia() {
+        sistema = new Sistema();
+        initComponents();
+    }
+    
+    public VentanaFamilia(Sistema unSistema) {
+        sistema = unSistema;
         initComponents();
     }
 
@@ -27,6 +37,7 @@ public class VentanaFamilia extends javax.swing.JFrame {
         label_Celular = new javax.swing.JLabel();
         textField_Celular = new javax.swing.JTextField();
         button_Agregar = new javax.swing.JButton();
+        label_alerta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,9 +65,14 @@ public class VentanaFamilia extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(152, 152, 152))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_alerta, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -72,11 +88,7 @@ public class VentanaFamilia extends javax.swing.JFrame {
                         .addComponent(label_Celular, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(textField_Celular, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(button_Agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(152, 152, 152))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,7 +109,9 @@ public class VentanaFamilia extends javax.swing.JFrame {
                     .addComponent(textField_Celular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(button_Agregar)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_alerta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,28 +141,31 @@ public class VentanaFamilia extends javax.swing.JFrame {
     }//GEN-LAST:event_textField_CelularActionPerformed
 
     private void button_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_AgregarActionPerformed
+        if (textField_Cedula.getText().trim().equals("")
+        || textField_Apellido.getText().trim().equals("")
+        || textField_Celular.getText().trim().equals("")) {
 
+            label_alerta.setText("Complete todas las casillas");
+        }
+        else if (sistema.existeCedulaFamilia(textField_Cedula.getText().trim())) {
+            label_alerta.setText("Ya existe una familia con esa cédula");
+            textField_Cedula.setText("");
+        }
+        else {
+            Familia familia = new Familia(
+                textField_Cedula.getText().trim(),
+                textField_Apellido.getText().trim(),
+                textField_Celular.getText().trim()
+            );
+            sistema.agregarFamilia(familia);
+            textField_Cedula.setText("");
+            textField_Apellido.setText("");
+            textField_Celular.setText("");
+            label_alerta.setText("Familia agregada correctamente");
+        }
     }//GEN-LAST:event_button_AgregarActionPerformed
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new VentanaFamilia().setVisible(true));
     }
 
@@ -158,6 +175,7 @@ public class VentanaFamilia extends javax.swing.JFrame {
     private javax.swing.JLabel label_Apellido;
     private javax.swing.JLabel label_Cedula;
     private javax.swing.JLabel label_Celular;
+    private javax.swing.JLabel label_alerta;
     private javax.swing.JTextField textField_Apellido;
     private javax.swing.JTextField textField_Cedula;
     private javax.swing.JTextField textField_Celular;
