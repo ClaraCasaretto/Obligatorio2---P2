@@ -52,9 +52,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         menu_Alta.add(menuItem_Animales);
 
         menuItem_Familias.setText("Familias");
+        menuItem_Familias.addActionListener(this::menuItem_FamiliasActionPerformed);
         menu_Alta.add(menuItem_Familias);
 
         menuItem_Empresas.setText("Empresas");
+        menuItem_Empresas.addActionListener(this::menuItem_EmpresasActionPerformed);
         menu_Alta.add(menuItem_Empresas);
 
         MenuBar.add(menu_Alta);
@@ -125,6 +127,16 @@ public class PaginaPrincipal extends javax.swing.JFrame {
     private void menuItem_RealizarAdopcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_RealizarAdopcionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuItem_RealizarAdopcionActionPerformed
+
+    private void menuItem_FamiliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_FamiliasActionPerformed
+        VentanaFamilia ventana = new VentanaFamilia(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_FamiliasActionPerformed
+
+    private void menuItem_EmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_EmpresasActionPerformed
+        VentanaEmpresa ventana = new VentanaEmpresa(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_EmpresasActionPerformed
 
     /**
      * @param args the command line arguments
