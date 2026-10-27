@@ -6,6 +6,7 @@ package Ventanas;
 
 import Dominio.Sistema;
 import Dominio.Familia;
+import javax.swing.JOptionPane;
 
 public class VentanaFamilia extends javax.swing.JFrame {
     
@@ -142,13 +143,15 @@ public class VentanaFamilia extends javax.swing.JFrame {
 
     private void button_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_AgregarActionPerformed
         if (textField_Cedula.getText().trim().equals("")
-        || textField_Apellido.getText().trim().equals("")
-        || textField_Celular.getText().trim().equals("")) {
+            || textField_Apellido.getText().trim().equals("")
+            || textField_Celular.getText().trim().equals("")) {
 
-            label_alerta.setText("Complete todas las casillas");
+            JOptionPane.showMessageDialog(null,"Complete todas las casillas",
+                                         "Mensaje de error",JOptionPane.ERROR_MESSAGE);
         }
         else if (sistema.existeCedulaFamilia(textField_Cedula.getText().trim())) {
-            label_alerta.setText("Ya existe una familia con esa cédula");
+            JOptionPane.showMessageDialog(null,"Ya existe una familia con esa cédula",
+                                         "Mensaje de error",JOptionPane.ERROR_MESSAGE);
             textField_Cedula.setText("");
         }
         else {
@@ -158,10 +161,12 @@ public class VentanaFamilia extends javax.swing.JFrame {
                 textField_Celular.getText().trim()
             );
             sistema.agregarFamilia(familia);
+            JOptionPane.showMessageDialog(null,"Familia agregada correctamente", 
+                                          "Alta Familia",JOptionPane.PLAIN_MESSAGE);
             textField_Cedula.setText("");
             textField_Apellido.setText("");
             textField_Celular.setText("");
-            label_alerta.setText("Familia agregada correctamente");
+            
         }
     }//GEN-LAST:event_button_AgregarActionPerformed
 
