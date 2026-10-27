@@ -40,9 +40,8 @@ public class VentanaAnimal extends javax.swing.JFrame {
         label_Estado = new javax.swing.JLabel();
         comboBox_Estado = new javax.swing.JComboBox<>();
         button_Agregar = new javax.swing.JButton();
-        label_alerta = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Alta Animal");
         getContentPane().setLayout(null);
 
@@ -102,9 +101,6 @@ public class VentanaAnimal extends javax.swing.JFrame {
         button_Agregar.setBounds(160, 200, 90, 23);
         button_Agregar.getAccessibleContext().setAccessibleDescription("");
 
-        jPanel1.add(label_alerta);
-        label_alerta.setBounds(30, 230, 350, 30);
-
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 410, 300);
 
@@ -163,12 +159,12 @@ public class VentanaAnimal extends javax.swing.JFrame {
                 }else{
                     //Agregar el animal
                     Animal animal = new Animal(
-                        textField_Codigo.getText().trim(),
-                        textField_Nombre.getText().trim(),
-                        textField_Temperamento.getText().trim(),
-                        peso,
-                        comboBox_Estado.getSelectedItem().toString()
-                    );
+                                                textField_Codigo.getText().trim(),
+                                                textField_Nombre.getText().trim(),
+                                                textField_Temperamento.getText().trim(),
+                                                peso,
+                                                comboBox_Estado.getSelectedItem().toString()
+                                               );
                     sistema.agregarAnimal(animal);
                     JOptionPane.showMessageDialog(null,"Animal agregado correctamente",
                                                   "Alta Animal", JOptionPane.PLAIN_MESSAGE);
@@ -198,7 +194,6 @@ public class VentanaAnimal extends javax.swing.JFrame {
     private javax.swing.JLabel label_Nombre;
     private javax.swing.JLabel label_Peso;
     private javax.swing.JLabel label_Temperamento;
-    private javax.swing.JLabel label_alerta;
     private javax.swing.JTextField textField_Codigo;
     private javax.swing.JTextField textField_Nombre;
     private javax.swing.JTextField textField_Peso;

@@ -14,7 +14,6 @@ public class VentanaFamilia extends javax.swing.JFrame {
     private Familia familia;
     private Sistema sistema;
     
-    
     public VentanaFamilia() {
         sistema = new Sistema();
         initComponents();
@@ -38,9 +37,8 @@ public class VentanaFamilia extends javax.swing.JFrame {
         label_Celular = new javax.swing.JLabel();
         textField_Celular = new javax.swing.JTextField();
         button_Agregar = new javax.swing.JButton();
-        label_alerta = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -73,7 +71,6 @@ public class VentanaFamilia extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_alerta, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -89,7 +86,7 @@ public class VentanaFamilia extends javax.swing.JFrame {
                         .addComponent(label_Celular, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(textField_Celular, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,9 +107,7 @@ public class VentanaFamilia extends javax.swing.JFrame {
                     .addComponent(textField_Celular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(button_Agregar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label_alerta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,10 +151,10 @@ public class VentanaFamilia extends javax.swing.JFrame {
         }
         else {
             Familia familia = new Familia(
-                textField_Cedula.getText().trim(),
-                textField_Apellido.getText().trim(),
-                textField_Celular.getText().trim()
-            );
+                                        textField_Cedula.getText().trim(),
+                                        textField_Apellido.getText().trim(),
+                                        textField_Celular.getText().trim()
+                                        );
             sistema.agregarFamilia(familia);
             JOptionPane.showMessageDialog(null,"Familia agregada correctamente", 
                                           "Alta Familia",JOptionPane.PLAIN_MESSAGE);
@@ -180,7 +175,6 @@ public class VentanaFamilia extends javax.swing.JFrame {
     private javax.swing.JLabel label_Apellido;
     private javax.swing.JLabel label_Cedula;
     private javax.swing.JLabel label_Celular;
-    private javax.swing.JLabel label_alerta;
     private javax.swing.JTextField textField_Apellido;
     private javax.swing.JTextField textField_Cedula;
     private javax.swing.JTextField textField_Celular;

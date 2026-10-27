@@ -64,8 +64,7 @@ public class Sistema {
         }
         return existe;
     }
-    
-        
+       
     public void agregarFamilia(Familia unaFamilia) {
         listaFamilias.add(unaFamilia);
     }
@@ -76,6 +75,20 @@ public class Sistema {
 
     public void setListaEmpresas(ArrayList<Empresa> listaEmpresas) {
         this.listaEmpresas = listaEmpresas;
+    }
+    
+    public boolean existeRutEmpresa(String unRut){
+        boolean existe = false;
+        for (int i = 0; i < listaEmpresas.size(); i++) {
+            if(listaEmpresas.get(i).getRut().equals(unRut)){
+                existe = true;
+            }
+        }
+        return existe;
+    }
+    
+    public void agregarEmpresa(Empresa unaEmpresa){
+        listaEmpresas.add(unaEmpresa);
     }
 
     public ArrayList<Adopcion> getListaAdopciones() {
