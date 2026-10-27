@@ -5,6 +5,7 @@
 package Ventanas;
 import Dominio.Animal;
 import Dominio.Sistema;
+import javax.swing.JOptionPane;
 
 public class VentanaAnimal extends javax.swing.JFrame {
     
@@ -136,25 +137,29 @@ public class VentanaAnimal extends javax.swing.JFrame {
             ||textField_Temperamento.getText().trim().equals("") 
             ||textField_Peso.getText().trim().equals("")) {
             
-            label_alerta.setText("Complete todas las casillas");
-            
+            JOptionPane.showMessageDialog(null,"Complete todas las casillas",
+                                         "Mensaje de error", JOptionPane.ERROR_MESSAGE);
         }
         else if(sistema.existeCodigoAnimal(textField_Codigo.getText().trim())){
-            label_alerta.setText("Ya existe un animal con ese código");
+            JOptionPane.showMessageDialog(null,"Ya existe un animal con ese código",
+                                         "Mensaje de error", JOptionPane.ERROR_MESSAGE);
             textField_Codigo.setText("");
         }
         else if (!textField_Codigo.getText().trim().matches("[a-zA-Z0-9]+")) {
-            label_alerta.setText("El código debe ser alfanumérico");
+            JOptionPane.showMessageDialog(null,"El código debe ser alfanumérico",
+                                         "Mensaje de error", JOptionPane.ERROR_MESSAGE);
             textField_Codigo.setText("");
         }
         else if (comboBox_Estado.getSelectedItem().toString().trim().equals("")) {
-            label_alerta.setText("Seleccione un estado");
+            JOptionPane.showMessageDialog(null, "Seleccione un estado",
+                                          "Mensaje de error", JOptionPane.ERROR_MESSAGE);
         }
         else {
             try {
                 double peso = Double.parseDouble(textField_Peso.getText().trim());
                 if (peso <= 0) {
-                    label_alerta.setText("El peso debe ser mayor a 0");
+                    JOptionPane.showMessageDialog(null, "El peso debe ser mayor a 0",
+                                                 "Mensaje de error", JOptionPane.ERROR_MESSAGE);
                 }else{
                     //Agregar el animal
                     Animal animal = new Animal(
@@ -165,7 +170,8 @@ public class VentanaAnimal extends javax.swing.JFrame {
                         comboBox_Estado.getSelectedItem().toString()
                     );
                     sistema.agregarAnimal(animal);
-                    label_alerta.setText("Animal agregado correctamente");
+                    JOptionPane.showMessageDialog(null,"Animal agregado correctamente",
+                                                  "Alta Animal", JOptionPane.PLAIN_MESSAGE);
                     textField_Codigo.setText("");
                     textField_Nombre.setText("");
                     textField_Temperamento.setText("");
@@ -173,7 +179,8 @@ public class VentanaAnimal extends javax.swing.JFrame {
                     comboBox_Estado.setSelectedIndex(0);
                 }
             } catch (NumberFormatException e) {
-                label_alerta.setText("El peso debe ser un número válido");
+                JOptionPane.showMessageDialog(null, "El peso debe ser un número válido",
+                                             "Mensaje de error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_button_AgregarActionPerformed
