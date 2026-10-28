@@ -136,7 +136,7 @@ public class VentanaAnimal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Complete todas las casillas",
                                          "Mensaje de error", JOptionPane.ERROR_MESSAGE);
         }
-        else if(sistema.existeCodigoAnimal(textField_Codigo.getText().trim())){
+        else if(sistema.existeCodigoAnimal(textField_Codigo.getText().trim().toUpperCase())){
             JOptionPane.showMessageDialog(null,"Ya existe un animal con ese código",
                                          "Mensaje de error", JOptionPane.ERROR_MESSAGE);
             textField_Codigo.setText("");
@@ -157,10 +157,9 @@ public class VentanaAnimal extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "El peso debe ser mayor a 0",
                                                  "Mensaje de error", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    //Agregar el animal
                     Animal animal = new Animal(
-                                                textField_Codigo.getText().trim(),
-                                                textField_Nombre.getText().trim(),
+                                                textField_Codigo.getText().trim().toUpperCase(),
+                                                textField_Nombre.getText().trim().toUpperCase(),
                                                 textField_Temperamento.getText().trim(),
                                                 peso,
                                                 comboBox_Estado.getSelectedItem().toString()
