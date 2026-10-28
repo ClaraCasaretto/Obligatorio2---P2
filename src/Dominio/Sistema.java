@@ -69,6 +69,17 @@ public class Sistema {
         listaFamilias.add(unaFamilia);
     }
     
+    public ArrayList<Animal> obtenerAnimalesDisponibles() {
+        ArrayList<Animal> disponibles = new ArrayList<>();
+        for (int i = 0; i < listaAnimales.size(); i++) {
+            Animal animal = listaAnimales.get(i);
+            if (animal.getEstado().equals("Disponible para adoptar")) {
+                disponibles.add(animal);
+            }
+        }
+        return disponibles;
+    }
+    
     public ArrayList<Empresa> getListaEmpresas() {
         return listaEmpresas;
     }
