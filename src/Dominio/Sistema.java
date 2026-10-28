@@ -4,6 +4,8 @@
 */
 package Dominio;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class Sistema {
@@ -14,6 +16,7 @@ public class Sistema {
     private int contadorAdopcion;
     private ArrayList<Donacion> listaDonaciones;
     private int contadorDonacion;
+    private PropertyChangeSupport actulizandoCambios;
 
     public Sistema() {
         this.listaAnimales =  new ArrayList<Animal>();
@@ -23,6 +26,11 @@ public class Sistema {
         this.contadorAdopcion = 1;
         this.listaDonaciones = new ArrayList<Donacion>();
         this.contadorDonacion = 1;
+        actulizandoCambios = new PropertyChangeSupport(this);
+    }
+    
+    public void agregarListener(PropertyChangeListener unListener){
+        actulizandoCambios.addPropertyChangeListener(unListener);
     }
 
     public ArrayList<Animal> getListaAnimales() {
@@ -45,6 +53,7 @@ public class Sistema {
     
     public void agregarAnimal(Animal unAnimal) {
         listaAnimales.add(unAnimal);
+        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
     }
 
     public ArrayList<Familia> getListaFamilias() {

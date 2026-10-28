@@ -3,10 +3,14 @@
 * Clara Casaretto - N°: 250991
 */
 package Ventanas;
+import Dominio.Animal;
 import Dominio.Sistema;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 
-public class VentanaRealizarAdopcion extends javax.swing.JFrame {
+public class VentanaRealizarAdopcion extends javax.swing.JFrame implements PropertyChangeListener{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaRealizarAdopcion.class.getName());
     private Sistema sistema;
@@ -18,7 +22,19 @@ public class VentanaRealizarAdopcion extends javax.swing.JFrame {
     
     public VentanaRealizarAdopcion(Sistema unSistema) {
         sistema = unSistema;
-        initComponents();
+        initComponents();    
+        sistema.agregarListener(this);
+        actualizar();
+    }
+    
+    private void actualizar() {
+        ArrayList<Animal> disponibles = sistema.obtenerAnimalesDisponibles();
+        String[] datos = new String[disponibles.size()];
+        for (int i = 0; i < disponibles.size(); i++) {
+            Animal animal = disponibles.get(i);
+            datos[i] = animal.getCodigo() + " - " + animal.getNombre();
+        }
+        list_Animales.setListData(datos);
     }
 
     @SuppressWarnings("unchecked")
@@ -29,7 +45,7 @@ public class VentanaRealizarAdopcion extends javax.swing.JFrame {
         titulo = new javax.swing.JLabel();
         label_AnimalesDisponibles = new javax.swing.JLabel();
         jList_Animales = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        list_Animales = new javax.swing.JList<>();
         label_NumeroAdopcion = new javax.swing.JLabel();
         label_Datos = new javax.swing.JLabel();
         textField_NumeroAdopcion = new javax.swing.JTextField();
@@ -53,7 +69,7 @@ public class VentanaRealizarAdopcion extends javax.swing.JFrame {
 
         label_AnimalesDisponibles.setText("Animales disponibles:");
 
-        jList_Animales.setViewportView(jList1);
+        jList_Animales.setViewportView(list_Animales);
 
         label_NumeroAdopcion.setText(" Nº de adopción:");
 
@@ -70,8 +86,6 @@ public class VentanaRealizarAdopcion extends javax.swing.JFrame {
         textField_Temperamento.setEditable(false);
 
         label_Familia.setText("Familia:");
-
-        comboBox_Familia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         label_Comentarios.setText("Comentarios:");
 
@@ -194,7 +208,6 @@ public class VentanaRealizarAdopcion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_Adoptar;
     private javax.swing.JComboBox<String> comboBox_Familia;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jList_Animales;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -205,10 +218,20 @@ public class VentanaRealizarAdopcion extends javax.swing.JFrame {
     private javax.swing.JLabel label_NumeroAdopcion;
     private javax.swing.JLabel label_Peso;
     private javax.swing.JLabel label_Temperamento;
+    private javax.swing.JList<String> list_Animales;
     private javax.swing.JTextArea textArea_Comentarios;
     private javax.swing.JTextField textField_NumeroAdopcion;
     private javax.swing.JTextField textField_Peso;
     private javax.swing.JTextField textField_Temperamento;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
+
+
+    //SE UTLIZA PARA QUE SE ESTE ACTULIAZANDO CONSTANTEMENTE AL INGRESAR UN NUEVO ANIMAL
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("listaAnimales")) {
+            actualizar();
+        }
+    }
 }
