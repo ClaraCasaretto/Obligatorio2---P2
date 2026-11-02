@@ -152,7 +152,7 @@ public class VentanaFamilia extends javax.swing.JFrame {
         else {
             Familia familia = new Familia(
                                         textField_Cedula.getText().trim(),
-                                        textField_Apellido.getText().trim(),
+                                        textField_Apellido.getText().trim().toUpperCase(),
                                         textField_Celular.getText().trim()
                                         );
             sistema.agregarFamilia(familia);

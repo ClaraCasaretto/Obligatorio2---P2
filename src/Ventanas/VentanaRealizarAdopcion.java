@@ -4,6 +4,7 @@
 */
 package Ventanas;
 import Dominio.Animal;
+import Dominio.Familia;
 import Dominio.Sistema;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -28,6 +29,7 @@ public class VentanaRealizarAdopcion extends javax.swing.JFrame implements Prope
     }
     
     private void actualizar() {
+        //animales disponibles
         ArrayList<Animal> disponibles = sistema.obtenerAnimalesDisponibles();
         String[] datos = new String[disponibles.size()];
         for (int i = 0; i < disponibles.size(); i++) {
@@ -35,9 +37,17 @@ public class VentanaRealizarAdopcion extends javax.swing.JFrame implements Prope
             datos[i] = animal.getCodigo() + " - " + animal.getNombre();
         }
         list_Animales.setListData(datos);
+        //contador de adopción
         textField_NumeroAdopcion.setText("" + sistema.getContadorAdopcion());
+        //cargar familias
+        comboBox_Familia.removeAllItems();
+        ArrayList<Familia> familias = sistema.getListaFamilias();
+        for (int i = 0; i < familias.size(); i++) {
+            Familia familia = familias.get(i);
+            comboBox_Familia.addItem(familia.getApellido());
+        }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
