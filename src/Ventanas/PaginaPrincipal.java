@@ -68,6 +68,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         menu_Movimientos.add(menuItem_RealizarAdopcion);
 
         menuItem_CambiarDeEstado.setText("Cambiar de estado ");
+        menuItem_CambiarDeEstado.addActionListener(this::menuItem_CambiarDeEstadoActionPerformed);
         menu_Movimientos.add(menuItem_CambiarDeEstado);
 
         menuItem_AnularAdopcion.setText("Anular adopción");
@@ -138,6 +139,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         VentanaEmpresa ventana = new VentanaEmpresa(sistema);
         ventana.setVisible(true);
     }//GEN-LAST:event_menuItem_EmpresasActionPerformed
+
+    private void menuItem_CambiarDeEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_CambiarDeEstadoActionPerformed
+        VentanaCambiarEstado ventana = new VentanaCambiarEstado(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_CambiarDeEstadoActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new PaginaPrincipal().setVisible(true));

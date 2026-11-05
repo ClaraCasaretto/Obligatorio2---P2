@@ -89,6 +89,26 @@ public class Sistema {
         return disponibles;
     }
     
+    public ArrayList<Animal> obtenerAnimalesNoEntregados() {
+        ArrayList<Animal> animales = new ArrayList<>();
+        for (int i = 0; i < listaAnimales.size(); i++) {
+            Animal animal = listaAnimales.get(i);
+            if (!animal.getEstado().equals("Entregado a familia")) {
+                animales.add(animal);
+            }
+        }
+        return animales;
+    }
+    
+    public void cambiarEstadoAnimal(Animal unAnimal) {
+        if (unAnimal.getEstado().equals("Disponible para adoptar")) {
+            unAnimal.setEstado("No disponible para adoptar");
+        } else {
+            unAnimal.setEstado("Disponible para adoptar");
+        }
+        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
+    }
+    
     public ArrayList<Empresa> getListaEmpresas() {
         return listaEmpresas;
     }
