@@ -7,6 +7,7 @@ import Dominio.Sistema;
 import Dominio.Adopcion;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 
 public class VentanaAnularAdopcion extends javax.swing.JFrame implements PropertyChangeListener{
@@ -22,8 +23,23 @@ public class VentanaAnularAdopcion extends javax.swing.JFrame implements Propert
     public VentanaAnularAdopcion(Sistema unSistema){
         sistema = unSistema;
         initComponents();
+        actualizar();
     }
-
+    
+    private void actualizar(){
+        ArrayList<Adopcion>adopciones = sistema.getListaAdopciones();
+        String[]datos = new String[adopciones.size()];
+        for (int i = 0; i < adopciones.size(); i++) {
+            Adopcion adopcion = adopciones.get(i);
+            datos[i] =   adopcion.getNumero() + "."
+                       + adopcion.getAnimal().getCodigo() + "("
+                       + adopcion.getAnimal().getNombre() + ") - "
+                       + adopcion.getFamilia().getCedula() + "("
+                       + adopcion.getFamilia().getApellido() + ")";   
+        }
+        list_Animales.setListData(datos);
+    }
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -259,7 +275,7 @@ public class VentanaAnularAdopcion extends javax.swing.JFrame implements Propert
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("listaAnimales")) {
-            //actualizar();
+            actualizar();
         }
     }
 }
