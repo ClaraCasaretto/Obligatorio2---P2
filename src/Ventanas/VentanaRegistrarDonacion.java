@@ -3,19 +3,41 @@
 * Clara Casaretto - N°: 250991
 */
 package Ventanas;
+import Dominio.Empresa;
+import Dominio.Sistema;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class VentanaRegistrarDonacion extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaRegistrarDonacion.class.getName());
-
+    private Sistema sistema;
+    
     public VentanaRegistrarDonacion() {
+        sistema = new Sistema();
         initComponents();
+    }
+    
+    public VentanaRegistrarDonacion(Sistema unSistema) {
+        sistema = unSistema;
+        initComponents();
+        actualizar();
+    }
+    
+    private void actualizar() {
+        textField_NumeroAdopcion.setText("" + sistema.getContadorDonacion());
+        comboBox_Empresa.removeAllItems();
+        ArrayList<Empresa> empresas = sistema.getListaEmpresas();
+        for (int i = 0; i < empresas.size(); i++) {
+            comboBox_Empresa.addItem(empresas.get(i).getNombre());
+        }
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup_TipoAlimento = new javax.swing.ButtonGroup();
         titulo = new javax.swing.JLabel();
         label_Datos = new javax.swing.JLabel();
         label_NumeroDonacion = new javax.swing.JLabel();
@@ -45,17 +67,23 @@ public class VentanaRegistrarDonacion extends javax.swing.JFrame {
         textField_NumeroAdopcion.setEditable(false);
         textField_NumeroAdopcion.setBackground(new java.awt.Color(204, 204, 204));
         textField_NumeroAdopcion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        textField_NumeroAdopcion.addActionListener(this::textField_NumeroAdopcionActionPerformed);
 
         label_Empresa.setText("Empresa:");
 
         label_TipoDeAlimento.setText("Tipo de alimento:");
 
+        buttonGroup_TipoAlimento.add(radioButton_PerrosGrandes);
         radioButton_PerrosGrandes.setText("Para perros grandes");
 
+        buttonGroup_TipoAlimento.add(radioButton_PerrosChicos);
         radioButton_PerrosChicos.setText("Para perros chicos");
 
+        buttonGroup_TipoAlimento.add(radioButton_PerrosAdultos);
         radioButton_PerrosAdultos.setText("Para perros adultos");
+        radioButton_PerrosAdultos.addActionListener(this::radioButton_PerrosAdultosActionPerformed);
 
+        buttonGroup_TipoAlimento.add(radioButton_Otros);
         radioButton_Otros.setText("Otros");
 
         label_CantidadDeKilos.setText("Cantidad de kilos:");
@@ -84,28 +112,23 @@ public class VentanaRegistrarDonacion extends javax.swing.JFrame {
                                         .addGap(6, 6, 6)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(label_NumeroDonacion, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(label_CantidadDeKilos, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(textField_NumeroAdopcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(textField_CantidadDeKilos, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGap(104, 104, 104)
-                                                .addComponent(radioButton_Otros))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(label_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(comboBox_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(label_TipoDeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(label_NumeroDonacion, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(label_TipoDeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(label_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(radioButton_PerrosAdultos)
                                                     .addComponent(radioButton_PerrosGrandes)
-                                                    .addComponent(radioButton_PerrosChicos)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(label_CantidadDeKilos, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(textField_CantidadDeKilos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                        .addGap(0, 55, Short.MAX_VALUE))
+                                                    .addComponent(radioButton_PerrosChicos)
+                                                    .addComponent(radioButton_Otros)
+                                                    .addComponent(comboBox_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(textField_NumeroAdopcion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                        .addGap(0, 43, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(button_Registrar)))
@@ -119,31 +142,31 @@ public class VentanaRegistrarDonacion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(label_Datos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_NumeroDonacion)
-                    .addComponent(textField_NumeroAdopcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_Empresa)
-                    .addComponent(comboBox_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(label_TipoDeAlimento)
-                        .addGap(51, 51, 51))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_NumeroDonacion)
+                            .addComponent(textField_NumeroAdopcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_Empresa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_TipoDeAlimento))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(comboBox_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radioButton_PerrosGrandes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radioButton_PerrosChicos)
-                        .addGap(6, 6, 6)))
-                .addComponent(radioButton_PerrosAdultos)
-                .addGap(2, 2, 2)
+                        .addGap(2, 2, 2)
+                        .addComponent(radioButton_PerrosAdultos)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radioButton_Otros)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_CantidadDeKilos)
                     .addComponent(textField_CantidadDeKilos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(19, 19, 19)
                 .addComponent(button_Registrar)
                 .addGap(8, 8, 8))
         );
@@ -152,19 +175,81 @@ public class VentanaRegistrarDonacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_RegistrarActionPerformed
+        int posicionEmpresa = comboBox_Empresa.getSelectedIndex();
+        String kilosTexto  = textField_CantidadDeKilos.getText().trim();
+        String tipo = "";
+        if(radioButton_PerrosGrandes.isSelected()){
+            tipo = "1";
+        }else if(radioButton_PerrosChicos.isSelected()){
+            tipo = "2";
+        }else if(radioButton_PerrosAdultos.isSelected()){
+            tipo = "3";
+        }else if(radioButton_Otros.isSelected()){
+            tipo = "4";
+        }
+        
+        if(posicionEmpresa == -1){
+            JOptionPane.showMessageDialog(null, "Seleccione una empresa",
+                                          "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(tipo.equals("")){
+            JOptionPane.showMessageDialog(null, "Seleccione un tipo de alimento",
+                                          "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(kilosTexto .equals("")){
+            JOptionPane.showMessageDialog(null, "Ingrese la cantidad de kilos",
+                                          "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+        } 
+        else {
+            try {
+                double kilos = Double.parseDouble(kilosTexto);
 
+                if (kilos <= 0) {
+                    JOptionPane.showMessageDialog(null,
+                            "La cantidad de kilos debe ser mayor a cero",
+                            "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+
+                } else {
+                    Empresa empresa = sistema.getListaEmpresas().get(posicionEmpresa);
+
+                    sistema.agregarDonacion(empresa, tipo, kilos);
+
+                    JOptionPane.showMessageDialog(null,
+                            "Donación registrada correctamente",
+                            "Registrar donación", JOptionPane.INFORMATION_MESSAGE);
+
+                    textField_CantidadDeKilos.setText("");
+                    buttonGroup_TipoAlimento.clearSelection();
+
+                    actualizar();
+                }
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,
+                        "Ingrese una cantidad de kilos válida",
+                        "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_button_RegistrarActionPerformed
 
     private void textField_CantidadDeKilosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_CantidadDeKilosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textField_CantidadDeKilosActionPerformed
 
+    private void radioButton_PerrosAdultosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_PerrosAdultosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radioButton_PerrosAdultosActionPerformed
+
+    private void textField_NumeroAdopcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_NumeroAdopcionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textField_NumeroAdopcionActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new VentanaRegistrarDonacion().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup_TipoAlimento;
     private javax.swing.JButton button_Registrar;
     private javax.swing.JComboBox<String> comboBox_Empresa;
     private javax.swing.JLabel label_CantidadDeKilos;

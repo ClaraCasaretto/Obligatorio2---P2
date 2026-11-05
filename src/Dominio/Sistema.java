@@ -185,9 +185,14 @@ public class Sistema {
         this.contadorDonacion = contadorDonacion;
     }
     
-    
-    
-    
-    
-    
+    public void agregarDonacion(Empresa unaEmpresa, String unTipo, double unaCantKilos) {
+        Donacion donacion = new Donacion(
+                                         contadorDonacion,
+                                         unaEmpresa,
+                                         unTipo,
+                                         unaCantKilos
+                                        );
+        listaDonaciones.add(donacion);
+        contadorDonacion++;
+    }
 }
