@@ -146,6 +146,28 @@ public class Sistema {
     public void setContadorAdopcion(int contadorAdopcion) {
         this.contadorAdopcion = contadorAdopcion;
     }
+    
+    public void agregarAdopcion(Animal unAnimal, Familia unaFamilia, String unComentario) {
+        Adopcion adopcion = new Adopcion(
+                                            contadorAdopcion,
+                                            unAnimal,
+                                            unaFamilia,
+                                            unComentario
+                                        );
+        listaAdopciones.add(adopcion);
+        unAnimal.setEstado("Entregado a familia");
+        contadorAdopcion++;
+        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
+        actulizandoCambios.firePropertyChange("listaAdopciones", null, adopcion);
+    }
+    
+    public void anularAdopcion(Adopcion unaAdopcion) {
+        Animal animal = unaAdopcion.getAnimal();
+        animal.setEstado("No disponible para adoptar");
+        listaAdopciones.remove(unaAdopcion);
+        actulizandoCambios.firePropertyChange("listaAnimales", null, animal);
+        actulizandoCambios.firePropertyChange("listaAdopciones", unaAdopcion, null);
+    }
 
     public ArrayList<Donacion> getListaDonaciones() {
         return listaDonaciones;

@@ -9,6 +9,7 @@ import Dominio.Sistema;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 
 public class VentanaRealizarAdopcion extends javax.swing.JFrame implements PropertyChangeListener{
@@ -212,7 +213,24 @@ public class VentanaRealizarAdopcion extends javax.swing.JFrame implements Prope
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_AdoptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_AdoptarActionPerformed
-        // TODO add your handling code here:
+        int posicionAnimal = list_Animales.getSelectedIndex();
+        int posicionFamilia = comboBox_Familia.getSelectedIndex();
+        if (posicionAnimal == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un animal",
+                                          "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+        } else if (posicionFamilia == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una familia",
+                                         "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Animal animal = sistema.obtenerAnimalesDisponibles().get(posicionAnimal);
+            Familia familia = sistema.getListaFamilias().get(posicionFamilia);
+            String comentarios = textArea_Comentarios.getText().trim();
+            sistema.agregarAdopcion(animal, familia, comentarios);
+            JOptionPane.showMessageDialog(null,"Adopción realizada correctamente",
+                                          "Realizar adopción", JOptionPane.INFORMATION_MESSAGE);
+            textArea_Comentarios.setText("");
+            actualizar();
+        }
     }//GEN-LAST:event_button_AdoptarActionPerformed
 
     private void list_AnimalesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_list_AnimalesValueChanged

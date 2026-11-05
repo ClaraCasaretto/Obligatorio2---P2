@@ -36,36 +36,25 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="label_ApellidoFamilia" min="-2" pref="88" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="textField_ApellidoFamilia" min="-2" pref="199" max="-2" attributes="0"/>
+                          <Component id="label_NDeAdopcion" pref="94" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="label_Codigo" max="32767" attributes="0"/>
+                              <Component id="label_Nombre" max="32767" attributes="0"/>
+                              <Component id="label_EstadoActual" max="32767" attributes="0"/>
+                              <Component id="label_CedulaFamilia" max="32767" attributes="0"/>
+                              <Component id="label_ApellidoFamilia" pref="94" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="label_CedulaFamilia" min="-2" pref="88" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="textField_CedulaFamilia" min="-2" pref="199" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                              <Component id="textField_ApellidoFamilia" alignment="1" min="-2" pref="199" max="-2" attributes="0"/>
+                              <Component id="textField_CedulaFamilia" alignment="1" min="-2" pref="199" max="-2" attributes="0"/>
+                              <Component id="textField_EstadoActual" alignment="1" min="-2" pref="199" max="-2" attributes="0"/>
+                              <Component id="textField_Nombre" alignment="1" min="-2" pref="199" max="-2" attributes="0"/>
+                              <Component id="textField_Codigo" alignment="1" min="-2" pref="199" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="label_EstadoActual" min="-2" pref="88" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="textField_EstadoActual" min="-2" pref="199" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="label_NDeAdopcion" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="textField_NDeAdopcion" min="-2" pref="199" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="label_Nombre" min="-2" pref="88" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="textField_Nombre" min="-2" pref="199" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="label_Codigo" min="-2" pref="88" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="textField_Codigo" min="-2" pref="199" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="textField_NDeAdopcion" alignment="1" min="-2" pref="199" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>

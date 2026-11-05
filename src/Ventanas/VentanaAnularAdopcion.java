@@ -8,6 +8,7 @@ import Dominio.Adopcion;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 
 public class VentanaAnularAdopcion extends javax.swing.JFrame implements PropertyChangeListener{
@@ -132,30 +133,22 @@ public class VentanaAnularAdopcion extends javax.swing.JFrame implements Propert
                         .addGap(125, 125, 125))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(label_ApellidoFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(textField_ApellidoFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(label_CedulaFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(textField_CedulaFamilia, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(label_EstadoActual, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(textField_EstadoActual, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(label_NDeAdopcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textField_NDeAdopcion, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(label_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(textField_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(label_Codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(textField_Codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(label_NDeAdopcion, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(label_Codigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label_Nombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label_EstadoActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label_CedulaFamilia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label_ApellidoFamilia, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(textField_ApellidoFamilia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textField_CedulaFamilia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textField_EstadoActual, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textField_Nombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textField_Codigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(textField_NDeAdopcion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -216,7 +209,16 @@ public class VentanaAnularAdopcion extends javax.swing.JFrame implements Propert
     }// </editor-fold>//GEN-END:initComponents
 
     private void list_AnimalesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_list_AnimalesValueChanged
-
+        int posicion = list_Animales.getSelectedIndex();
+        if (posicion != -1) {
+            Adopcion adopcion = sistema.getListaAdopciones().get(posicion);
+            textField_NDeAdopcion.setText("" + adopcion.getNumero());
+            textField_Codigo.setText(adopcion.getAnimal().getCodigo());
+            textField_Nombre.setText(adopcion.getAnimal().getNombre());
+            textField_EstadoActual.setText(adopcion.getAnimal().getEstado());
+            textField_CedulaFamilia.setText(adopcion.getFamilia().getCedula());
+            textField_ApellidoFamilia.setText(adopcion.getFamilia().getApellido());
+        }
     }//GEN-LAST:event_list_AnimalesValueChanged
 
     private void textField_NDeAdopcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_NDeAdopcionActionPerformed
@@ -232,7 +234,23 @@ public class VentanaAnularAdopcion extends javax.swing.JFrame implements Propert
     }//GEN-LAST:event_textField_EstadoActualActionPerformed
 
     private void button_AnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_AnularActionPerformed
-
+        int posicion = list_Animales.getSelectedIndex();
+        if (posicion == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una adopción",
+                                          "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Adopcion adopcion = sistema.getListaAdopciones().get(posicion);
+            sistema.anularAdopcion(adopcion);
+            JOptionPane.showMessageDialog(null, "Adopción anulada correctamente",
+                                          "Anular adopción", JOptionPane.INFORMATION_MESSAGE);
+            actualizar();
+            textField_NDeAdopcion.setText("");
+            textField_Codigo.setText("");
+            textField_Nombre.setText("");
+            textField_EstadoActual.setText("");
+            textField_CedulaFamilia.setText("");
+            textField_ApellidoFamilia.setText("");
+        }
     }//GEN-LAST:event_button_AnularActionPerformed
 
     private void textField_ApellidoFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_ApellidoFamiliaActionPerformed
