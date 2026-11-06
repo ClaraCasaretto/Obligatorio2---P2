@@ -99,6 +99,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         menu_Varios.add(menuItem_RecuperarDatos);
 
         menuItem_Autores.setText("Autores");
+        menuItem_Autores.addActionListener(this::menuItem_AutoresActionPerformed);
         menu_Varios.add(menuItem_Autores);
 
         menuItem_Salir.setText("Salir");
@@ -156,6 +157,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         VentanaRegistrarDonacion ventana = new VentanaRegistrarDonacion(sistema);
         ventana.setVisible(true);
     }//GEN-LAST:event_menuItem_RegistrarDonacionActionPerformed
+
+    private void menuItem_AutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_AutoresActionPerformed
+        VentanaAutores ventana = new VentanaAutores();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_AutoresActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new PaginaPrincipal().setVisible(true));
