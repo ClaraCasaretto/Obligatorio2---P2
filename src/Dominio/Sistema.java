@@ -4,6 +4,8 @@
 */
 package Dominio;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class Sistema {
@@ -14,6 +16,7 @@ public class Sistema {
     private int contadorAdopcion;
     private ArrayList<Donacion> listaDonaciones;
     private int contadorDonacion;
+    private PropertyChangeSupport actulizandoCambios;
 
     public Sistema() {
         this.listaAnimales =  new ArrayList<Animal>();
@@ -23,6 +26,11 @@ public class Sistema {
         this.contadorAdopcion = 1;
         this.listaDonaciones = new ArrayList<Donacion>();
         this.contadorDonacion = 1;
+        actulizandoCambios = new PropertyChangeSupport(this);
+    }
+    
+    public void agregarListener(PropertyChangeListener unListener){
+        actulizandoCambios.addPropertyChangeListener(unListener);
     }
 
     public ArrayList<Animal> getListaAnimales() {
@@ -31,6 +39,21 @@ public class Sistema {
 
     public void setListaAnimales(ArrayList<Animal> listaAnimales) {
         this.listaAnimales = listaAnimales;
+    }
+    
+    public boolean existeCodigoAnimal(String unCodigo){
+        boolean existe = false;
+        for (int i = 0; i < listaAnimales.size(); i++) {
+            if(listaAnimales.get(i).getCodigo().equals(unCodigo)){
+                existe = true;
+            }
+        }
+        return existe;
+    }
+    
+    public void agregarAnimal(Animal unAnimal) {
+        listaAnimales.add(unAnimal);
+        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
     }
 
     public ArrayList<Familia> getListaFamilias() {
@@ -41,12 +64,71 @@ public class Sistema {
         this.listaFamilias = listaFamilias;
     }
 
+    public boolean existeCedulaFamilia(String unaCedula) {
+        boolean existe = false;
+        for (int i = 0; i < listaFamilias.size(); i++) {
+            if (listaFamilias.get(i).getCedula().equals(unaCedula)) {
+                existe = true;
+            }
+        }
+        return existe;
+    }
+       
+    public void agregarFamilia(Familia unaFamilia) {
+        listaFamilias.add(unaFamilia);
+    }
+    
+    public ArrayList<Animal> obtenerAnimalesDisponibles() {
+        ArrayList<Animal> disponibles = new ArrayList<>();
+        for (int i = 0; i < listaAnimales.size(); i++) {
+            Animal animal = listaAnimales.get(i);
+            if (animal.getEstado().equals("Disponible para adoptar")) {
+                disponibles.add(animal);
+            }
+        }
+        return disponibles;
+    }
+    
+    public ArrayList<Animal> obtenerAnimalesNoEntregados() {
+        ArrayList<Animal> animales = new ArrayList<>();
+        for (int i = 0; i < listaAnimales.size(); i++) {
+            Animal animal = listaAnimales.get(i);
+            if (!animal.getEstado().equals("Entregado a familia")) {
+                animales.add(animal);
+            }
+        }
+        return animales;
+    }
+    
+    public void cambiarEstadoAnimal(Animal unAnimal) {
+        if (unAnimal.getEstado().equals("Disponible para adoptar")) {
+            unAnimal.setEstado("No disponible para adoptar");
+        } else {
+            unAnimal.setEstado("Disponible para adoptar");
+        }
+        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
+    }
+    
     public ArrayList<Empresa> getListaEmpresas() {
         return listaEmpresas;
     }
 
     public void setListaEmpresas(ArrayList<Empresa> listaEmpresas) {
         this.listaEmpresas = listaEmpresas;
+    }
+    
+    public boolean existeRutEmpresa(String unRut){
+        boolean existe = false;
+        for (int i = 0; i < listaEmpresas.size(); i++) {
+            if(listaEmpresas.get(i).getRut().equals(unRut)){
+                existe = true;
+            }
+        }
+        return existe;
+    }
+    
+    public void agregarEmpresa(Empresa unaEmpresa){
+        listaEmpresas.add(unaEmpresa);
     }
 
     public ArrayList<Adopcion> getListaAdopciones() {
@@ -63,6 +145,28 @@ public class Sistema {
 
     public void setContadorAdopcion(int contadorAdopcion) {
         this.contadorAdopcion = contadorAdopcion;
+    }
+    
+    public void agregarAdopcion(Animal unAnimal, Familia unaFamilia, String unComentario) {
+        Adopcion adopcion = new Adopcion(
+                                            contadorAdopcion,
+                                            unAnimal,
+                                            unaFamilia,
+                                            unComentario
+                                        );
+        listaAdopciones.add(adopcion);
+        unAnimal.setEstado("Entregado a familia");
+        contadorAdopcion++;
+        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
+        actulizandoCambios.firePropertyChange("listaAdopciones", null, adopcion);
+    }
+    
+    public void anularAdopcion(Adopcion unaAdopcion) {
+        Animal animal = unaAdopcion.getAnimal();
+        animal.setEstado("No disponible para adoptar");
+        listaAdopciones.remove(unaAdopcion);
+        actulizandoCambios.firePropertyChange("listaAnimales", null, animal);
+        actulizandoCambios.firePropertyChange("listaAdopciones", unaAdopcion, null);
     }
 
     public ArrayList<Donacion> getListaDonaciones() {
@@ -81,9 +185,14 @@ public class Sistema {
         this.contadorDonacion = contadorDonacion;
     }
     
-    
-    
-    
-    
-    
+    public void agregarDonacion(Empresa unaEmpresa, String unTipo, double unaCantKilos) {
+        Donacion donacion = new Donacion(
+                                         contadorDonacion,
+                                         unaEmpresa,
+                                         unTipo,
+                                         unaCantKilos
+                                        );
+        listaDonaciones.add(donacion);
+        contadorDonacion++;
+    }
 }
