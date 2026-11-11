@@ -16,7 +16,7 @@ public class Sistema {
     private int contadorAdopcion;
     private ArrayList<Donacion> listaDonaciones;
     private int contadorDonacion;
-    private PropertyChangeSupport actulizandoCambios;
+    private PropertyChangeSupport actualizandoCambios;
 
     public Sistema() {
         this.listaAnimales =  new ArrayList<Animal>();
@@ -26,11 +26,11 @@ public class Sistema {
         this.contadorAdopcion = 1;
         this.listaDonaciones = new ArrayList<Donacion>();
         this.contadorDonacion = 1;
-        actulizandoCambios = new PropertyChangeSupport(this);
+        actualizandoCambios = new PropertyChangeSupport(this);
     }
     
     public void agregarListener(PropertyChangeListener unListener){
-        actulizandoCambios.addPropertyChangeListener(unListener);
+        actualizandoCambios.addPropertyChangeListener(unListener);
     }
 
     public ArrayList<Animal> getListaAnimales() {
@@ -53,7 +53,7 @@ public class Sistema {
     
     public void agregarAnimal(Animal unAnimal) {
         listaAnimales.add(unAnimal);
-        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
+        actualizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
     }
 
     public ArrayList<Familia> getListaFamilias() {
@@ -106,7 +106,7 @@ public class Sistema {
         } else {
             unAnimal.setEstado("Disponible para adoptar");
         }
-        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
+        actualizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
     }
     
     public ArrayList<Empresa> getListaEmpresas() {
@@ -129,6 +129,7 @@ public class Sistema {
     
     public void agregarEmpresa(Empresa unaEmpresa){
         listaEmpresas.add(unaEmpresa);
+        actualizandoCambios.firePropertyChange("listaEmpresas", null, unaEmpresa);
     }
 
     public ArrayList<Adopcion> getListaAdopciones() {
@@ -157,16 +158,16 @@ public class Sistema {
         listaAdopciones.add(adopcion);
         unAnimal.setEstado("Entregado a familia");
         contadorAdopcion++;
-        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
-        actulizandoCambios.firePropertyChange("listaAdopciones", null, adopcion);
+        actualizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
+        actualizandoCambios.firePropertyChange("listaAdopciones", null, adopcion);
     }
     
     public void anularAdopcion(Adopcion unaAdopcion) {
         Animal animal = unaAdopcion.getAnimal();
         animal.setEstado("No disponible para adoptar");
         listaAdopciones.remove(unaAdopcion);
-        actulizandoCambios.firePropertyChange("listaAnimales", null, animal);
-        actulizandoCambios.firePropertyChange("listaAdopciones", unaAdopcion, null);
+        actualizandoCambios.firePropertyChange("listaAnimales", null, animal);
+        actualizandoCambios.firePropertyChange("listaAdopciones", unaAdopcion, null);
     }
 
     public ArrayList<Donacion> getListaDonaciones() {
@@ -194,5 +195,6 @@ public class Sistema {
                                         );
         listaDonaciones.add(donacion);
         contadorDonacion++;
+        actualizandoCambios.firePropertyChange("listaDonaciones", null, donacion);
     }
 }
