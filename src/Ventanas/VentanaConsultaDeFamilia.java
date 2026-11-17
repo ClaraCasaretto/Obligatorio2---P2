@@ -3,7 +3,11 @@
 * Clara Casaretto - N°: 250991
 */
 package Ventanas;
+import Dominio.Adopcion;
+import Dominio.Familia;
 import Dominio.Sistema;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
     
@@ -11,17 +15,36 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
     private Sistema sistema;
 
     public VentanaConsultaDeFamilia() {
-        sistema = new Sistema();
         initComponents();
     }
     
     public VentanaConsultaDeFamilia(Sistema unSistema) {
         sistema = unSistema;
         initComponents();
+        actualizar();
     }
 
     public void actualizar(){
-        //aun no se como hacer para actualizar tablas entonces estoy evaluando si hacer un JList
+        DefaultTableModel modelo = (DefaultTableModel) tabla_Familias.getModel();
+        modelo.setRowCount(0);
+        ArrayList<Familia> familias = sistema.getListaFamilias();
+        for (int i = 0; i < familias.size(); i++) {
+            Familia unaFamilia = familias.get(i);
+            int cantidad = 0;
+            ArrayList<Adopcion> adopciones = sistema.getListaAdopciones();
+            for (int j = 0; j < adopciones.size(); j++) {
+                Adopcion unaAdopcion = adopciones.get(i);
+                if(unaAdopcion.getFamilia().getCedula().equals(unaFamilia.getCedula())){
+                    cantidad ++;
+                }   
+            }
+            Object[] fila = {
+                unaFamilia.getApellido(),
+                unaFamilia.getCedula(),
+                0
+            };
+            modelo.addRow(fila);
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -34,7 +57,7 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
         radioButton_Apellido = new javax.swing.JRadioButton();
         radioButton_CantDeAdopciones = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla_Familias = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -51,7 +74,7 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
         radioButton_CantDeAdopciones.setText("Cantidad de adopciones (Mayor a menor)");
         radioButton_CantDeAdopciones.addActionListener(this::radioButton_CantDeAdopcionesActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_Familias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -70,7 +93,7 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla_Familias);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,10 +152,10 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_OrdenarPor;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel label_Datos;
     private javax.swing.JRadioButton radioButton_Apellido;
     private javax.swing.JRadioButton radioButton_CantDeAdopciones;
+    private javax.swing.JTable tabla_Familias;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
