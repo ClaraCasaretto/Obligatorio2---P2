@@ -90,6 +90,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         menu_Varios.add(menuItem_ConsultaDeFamilia);
 
         menuItem_ConsultaDeDonaciones.setText("Consulta de donaciones");
+        menuItem_ConsultaDeDonaciones.addActionListener(this::menuItem_ConsultaDeDonacionesActionPerformed);
         menu_Varios.add(menuItem_ConsultaDeDonaciones);
 
         menuItem_GeneracionDePagina.setText("Generación de página");
@@ -103,6 +104,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         menu_Varios.add(menuItem_Autores);
 
         menuItem_Salir.setText("Salir");
+        menuItem_Salir.addActionListener(this::menuItem_SalirActionPerformed);
         menu_Varios.add(menuItem_Salir);
 
         MenuBar.add(menu_Varios);
@@ -162,6 +164,16 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         VentanaAutores ventana = new VentanaAutores();
         ventana.setVisible(true);
     }//GEN-LAST:event_menuItem_AutoresActionPerformed
+
+    private void menuItem_ConsultaDeDonacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_ConsultaDeDonacionesActionPerformed
+        VentanaConsultaDeDonaciones ventana = new VentanaConsultaDeDonaciones(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_ConsultaDeDonacionesActionPerformed
+
+    private void menuItem_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_SalirActionPerformed
+        VentanaSalir ventana = new VentanaSalir();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_SalirActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new PaginaPrincipal().setVisible(true));

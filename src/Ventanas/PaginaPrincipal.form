@@ -93,6 +93,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Consulta de donaciones"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_ConsultaDeDonacionesActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItem_GeneracionDePagina">
               <Properties>
@@ -116,6 +119,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salir"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_SalirActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
