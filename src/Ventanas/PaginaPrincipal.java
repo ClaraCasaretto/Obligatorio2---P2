@@ -332,6 +332,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         menu_Movimientos.add(menuItem_RegistrarDonacion);
 
         menuItem_ImportarDonaciones.setText("Importar donaciones");
+        menuItem_ImportarDonaciones.addActionListener(this::menuItem_ImportarDonacionesActionPerformed);
         menu_Movimientos.add(menuItem_ImportarDonaciones);
 
         MenuBar.add(menu_Movimientos);
@@ -400,10 +401,10 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
                                         .addComponent(jTextField4)
                                         .addComponent(jTextField5)
                                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,6 +529,11 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
     private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField9ActionPerformed
+
+    private void menuItem_ImportarDonacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_ImportarDonacionesActionPerformed
+        VentanaImportarDonaciones ventana= new VentanaImportarDonaciones(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_ImportarDonacionesActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new PaginaPrincipal().setVisible(true));
