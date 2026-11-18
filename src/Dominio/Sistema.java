@@ -7,6 +7,8 @@ package Dominio;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import lecturaEscrituraArchivos.ArchivoLectura;
+import lecturaEscrituraArchivos.ArchivoGrabacion;
 
 public class Sistema {
     private ArrayList<Animal>listaAnimales;
@@ -196,5 +198,73 @@ public class Sistema {
         listaDonaciones.add(donacion);
         contadorDonacion++;
         actualizandoCambios.firePropertyChange("listaDonaciones", null, donacion);
+    }
+    
+    public ArrayList<String> importarDonaciones(String nombreArchivo){
+        ArrayList <String> errores = new ArrayList();
+        ArchivoLectura archivo = new ArchivoLectura (nombreArchivo);
+        int numeroLinea=0;
+
+        while (archivo.hayMasLineas()){
+            numeroLinea++;
+            String linea= archivo.linea();
+            String [] datos = linea.split("#", -1);
+            if (datos.length != 3){
+                errores.add("Linea"+numeroLinea+": formato incorrecto.");
+            }else {
+                String rut= datos[0].trim();
+                String tipo= datos[1].trim();
+                String kilosTxt= datos[2].trim();
+                
+                String erroresEncontrados= "";
+                Empresa empresa= null;
+                double kilos= 0;
+                
+                for (Empresa unaEmpresa: listaEmpresas){
+                    if (unaEmpresa.getRut().equals(rut)){
+                        empresa= unaEmpresa;
+                    }
+                }
+                if(empresa==null){
+                    erroresEncontrados+= "Empresa no encontrada.";
+                }
+                
+                if(!tipo.equals("1")&&!tipo.equals("2")&&!tipo.equals("3")&&!tipo.equals("4")){
+                    erroresEncontrados+= "Tipo de alimento invalido.";
+                }
+                
+                try{
+                    kilos= Double.parseDouble(kilosTxt);
+                    if (kilos<=0){
+                        erroresEncontrados+= "Cantidad de kilos invalida.";
+                    }
+                }catch (NumberFormatException e){
+                    erroresEncontrados+= "Cantidad de kilos invalida.";
+                }
+                
+                if (erroresEncontrados.isEmpty()){
+                    agregarDonacion(empresa, tipo, kilos);
+                }else {
+                    errores.add("Linea "+numeroLinea+": "+erroresEncontrados);
+                }
+            }
+        }
+        archivo.cerrar();
+        
+        if (!errores.isEmpty()){
+            int posicionPunto= nombreArchivo.lastIndexOf(".");
+            
+            String nombreError= nombreArchivo.substring(0, posicionPunto)+ "Error"+ nombreArchivo.substring(posicionPunto);
+            
+            ArchivoGrabacion archivoErrores= new ArchivoGrabacion(nombreError);
+            
+            for (String error: errores){
+                archivoErrores.grabarLinea(error);
+            }
+            
+            archivoErrores.cerrar();
+        }
+        
+        return errores;
     }
 }
