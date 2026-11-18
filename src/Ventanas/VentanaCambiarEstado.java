@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.awt.Color;
 
 public class VentanaCambiarEstado extends javax.swing.JFrame implements PropertyChangeListener{
     
@@ -79,7 +80,7 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
         jList_Animales.setViewportView(list_Animales);
 
         getContentPane().add(jList_Animales);
-        jList_Animales.setBounds(6, 65, 258, 209);
+        jList_Animales.setBounds(6, 65, 270, 209);
 
         label_Datos.setText("Datos del animal seleccionado:");
         getContentPane().add(label_Datos);
@@ -87,7 +88,7 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
 
         label_Codigo.setText("Código:");
         getContentPane().add(label_Codigo);
-        label_Codigo.setBounds(300, 90, 88, 16);
+        label_Codigo.setBounds(288, 90, 100, 16);
 
         textField_Codigo.setEditable(false);
         textField_Codigo.setBackground(new java.awt.Color(204, 204, 204));
@@ -97,7 +98,7 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
 
         label_Nombre.setText("Nombre:");
         getContentPane().add(label_Nombre);
-        label_Nombre.setBounds(300, 118, 88, 16);
+        label_Nombre.setBounds(288, 118, 100, 16);
 
         textField_Nombre.setEditable(false);
         textField_Nombre.setBackground(new java.awt.Color(204, 204, 204));
@@ -107,7 +108,7 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
 
         label_Temperamento.setText("Temperamento:");
         getContentPane().add(label_Temperamento);
-        label_Temperamento.setBounds(300, 146, 88, 16);
+        label_Temperamento.setBounds(288, 146, 100, 16);
 
         textField_Temperamento.setEditable(false);
         textField_Temperamento.setBackground(new java.awt.Color(204, 204, 204));
@@ -117,7 +118,7 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
 
         label_Peso.setText("Peso en kilos:");
         getContentPane().add(label_Peso);
-        label_Peso.setBounds(300, 174, 88, 16);
+        label_Peso.setBounds(288, 174, 100, 16);
 
         textField_Peso.setEditable(false);
         textField_Peso.setBackground(new java.awt.Color(204, 204, 204));
@@ -127,7 +128,7 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
 
         label_EstadoActual.setText("Estado actual:");
         getContentPane().add(label_EstadoActual);
-        label_EstadoActual.setBounds(300, 202, 88, 16);
+        label_EstadoActual.setBounds(288, 202, 100, 16);
 
         textField_EstadoActual.setEditable(false);
         textField_EstadoActual.setBackground(new java.awt.Color(204, 204, 204));
@@ -153,6 +154,11 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
             textField_Temperamento.setText(animal.getTemperamento());
             textField_Peso.setText("" +animal.getPeso());
             textField_EstadoActual.setText(animal.getEstado());
+            if (animal.getEstado().equals("Disponible para adoptar")) {
+                textField_EstadoActual.setForeground(new Color(0, 128, 0));
+            } else {
+                textField_EstadoActual.setForeground(new Color(255, 0, 0));
+            }
         }else{
             textField_Codigo.setText("");
             textField_Nombre.setText("");

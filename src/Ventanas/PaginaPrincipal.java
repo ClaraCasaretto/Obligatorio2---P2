@@ -340,9 +340,11 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         menu_Varios.setText("Varios");
 
         menuItem_ConsultaDeFamilia.setText("Consulta de familia");
+        menuItem_ConsultaDeFamilia.addActionListener(this::menuItem_ConsultaDeFamiliaActionPerformed);
         menu_Varios.add(menuItem_ConsultaDeFamilia);
 
         menuItem_ConsultaDeDonaciones.setText("Consulta de donaciones");
+        menuItem_ConsultaDeDonaciones.addActionListener(this::menuItem_ConsultaDeDonacionesActionPerformed);
         menu_Varios.add(menuItem_ConsultaDeDonaciones);
 
         menuItem_GeneracionDePagina.setText("Generación de página");
@@ -356,6 +358,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         menu_Varios.add(menuItem_Autores);
 
         menuItem_Salir.setText("Salir");
+        menuItem_Salir.addActionListener(this::menuItem_SalirActionPerformed);
         menu_Varios.add(menuItem_Salir);
 
         MenuBar.add(menu_Varios);
@@ -522,6 +525,20 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         ventana.setVisible(true);
     }//GEN-LAST:event_menuItem_AutoresActionPerformed
 
+    private void menuItem_ConsultaDeDonacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_ConsultaDeDonacionesActionPerformed
+        VentanaConsultaDeDonaciones ventana = new VentanaConsultaDeDonaciones(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_ConsultaDeDonacionesActionPerformed
+
+    private void menuItem_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_SalirActionPerformed
+        VentanaSalir ventana = new VentanaSalir();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_SalirActionPerformed
+
+    private void menuItem_ConsultaDeFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_ConsultaDeFamiliaActionPerformed
+        VentanaConsultaDeFamilia ventana = new VentanaConsultaDeFamilia(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_ConsultaDeFamiliaActionPerformed
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed

@@ -151,7 +151,7 @@ public class VentanaEmpresa extends javax.swing.JFrame {
         }
         else{
             Empresa empresa = new Empresa(
-                                        textField_Nombre.getText().trim(),
+                                        textField_Nombre.getText().trim().toUpperCase(),
                                         textField_RUT.getText().trim(),
                                         textField_Direccion.getText().trim()
                                         ); 
