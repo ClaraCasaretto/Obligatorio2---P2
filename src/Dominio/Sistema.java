@@ -7,6 +7,8 @@ package Dominio;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import lecturaEscrituraArchivos.ArchivoLectura;
+import lecturaEscrituraArchivos.ArchivoGrabacion;
 
 public class Sistema {
     private ArrayList<Animal>listaAnimales;
@@ -16,7 +18,7 @@ public class Sistema {
     private int contadorAdopcion;
     private ArrayList<Donacion> listaDonaciones;
     private int contadorDonacion;
-    private PropertyChangeSupport actulizandoCambios;
+    private PropertyChangeSupport actualizandoCambios;
 
     public Sistema() {
         this.listaAnimales =  new ArrayList<Animal>();
@@ -26,11 +28,11 @@ public class Sistema {
         this.contadorAdopcion = 1;
         this.listaDonaciones = new ArrayList<Donacion>();
         this.contadorDonacion = 1;
-        actulizandoCambios = new PropertyChangeSupport(this);
+        actualizandoCambios = new PropertyChangeSupport(this);
     }
     
     public void agregarListener(PropertyChangeListener unListener){
-        actulizandoCambios.addPropertyChangeListener(unListener);
+        actualizandoCambios.addPropertyChangeListener(unListener);
     }
 
     public ArrayList<Animal> getListaAnimales() {
@@ -53,7 +55,7 @@ public class Sistema {
     
     public void agregarAnimal(Animal unAnimal) {
         listaAnimales.add(unAnimal);
-        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
+        actualizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
     }
 
     public ArrayList<Familia> getListaFamilias() {
@@ -106,7 +108,7 @@ public class Sistema {
         } else {
             unAnimal.setEstado("Disponible para adoptar");
         }
-        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
+        actualizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
     }
     
     public ArrayList<Empresa> getListaEmpresas() {
@@ -129,6 +131,7 @@ public class Sistema {
     
     public void agregarEmpresa(Empresa unaEmpresa){
         listaEmpresas.add(unaEmpresa);
+        actualizandoCambios.firePropertyChange("listaEmpresas", null, unaEmpresa);
     }
 
     public ArrayList<Adopcion> getListaAdopciones() {
@@ -157,16 +160,16 @@ public class Sistema {
         listaAdopciones.add(adopcion);
         unAnimal.setEstado("Entregado a familia");
         contadorAdopcion++;
-        actulizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
-        actulizandoCambios.firePropertyChange("listaAdopciones", null, adopcion);
+        actualizandoCambios.firePropertyChange("listaAnimales", null, unAnimal);
+        actualizandoCambios.firePropertyChange("listaAdopciones", null, adopcion);
     }
     
     public void anularAdopcion(Adopcion unaAdopcion) {
         Animal animal = unaAdopcion.getAnimal();
         animal.setEstado("No disponible para adoptar");
         listaAdopciones.remove(unaAdopcion);
-        actulizandoCambios.firePropertyChange("listaAnimales", null, animal);
-        actulizandoCambios.firePropertyChange("listaAdopciones", unaAdopcion, null);
+        actualizandoCambios.firePropertyChange("listaAnimales", null, animal);
+        actualizandoCambios.firePropertyChange("listaAdopciones", unaAdopcion, null);
     }
 
     public ArrayList<Donacion> getListaDonaciones() {
@@ -194,5 +197,74 @@ public class Sistema {
                                         );
         listaDonaciones.add(donacion);
         contadorDonacion++;
+        actualizandoCambios.firePropertyChange("listaDonaciones", null, donacion);
+    }
+    
+    public ArrayList<String> importarDonaciones(String nombreArchivo){
+        ArrayList <String> errores = new ArrayList();
+        ArchivoLectura archivo = new ArchivoLectura (nombreArchivo);
+        int numeroLinea=0;
+
+        while (archivo.hayMasLineas()){
+            numeroLinea++;
+            String linea= archivo.linea();
+            String [] datos = linea.split("#", -1);
+            if (datos.length != 3){
+                errores.add("Linea"+numeroLinea+": formato incorrecto.");
+            }else {
+                String rut= datos[0].trim();
+                String tipo= datos[1].trim();
+                String kilosTxt= datos[2].trim();
+                
+                String erroresEncontrados= "";
+                Empresa empresa= null;
+                double kilos= 0;
+                
+                for (Empresa unaEmpresa: listaEmpresas){
+                    if (unaEmpresa.getRut().equals(rut)){
+                        empresa= unaEmpresa;
+                    }
+                }
+                if(empresa==null){
+                    erroresEncontrados+= "Empresa no encontrada.";
+                }
+                
+                if(!tipo.equals("1")&&!tipo.equals("2")&&!tipo.equals("3")&&!tipo.equals("4")){
+                    erroresEncontrados+= "Tipo de alimento invalido.";
+                }
+                
+                try{
+                    kilos= Double.parseDouble(kilosTxt);
+                    if (kilos<=0){
+                        erroresEncontrados+= "Cantidad de kilos invalida.";
+                    }
+                }catch (NumberFormatException e){
+                    erroresEncontrados+= "Cantidad de kilos invalida.";
+                }
+                
+                if (erroresEncontrados.isEmpty()){
+                    agregarDonacion(empresa, tipo, kilos);
+                }else {
+                    errores.add("Linea "+numeroLinea+": "+erroresEncontrados);
+                }
+            }
+        }
+        archivo.cerrar();
+        
+        if (!errores.isEmpty()){
+            int posicionPunto= nombreArchivo.lastIndexOf(".");
+            
+            String nombreError= nombreArchivo.substring(0, posicionPunto)+ "Error"+ nombreArchivo.substring(posicionPunto);
+            
+            ArchivoGrabacion archivoErrores= new ArchivoGrabacion(nombreError);
+            
+            for (String error: errores){
+                archivoErrores.grabarLinea(error);
+            }
+            
+            archivoErrores.cerrar();
+        }
+        
+        return errores;
     }
 }
