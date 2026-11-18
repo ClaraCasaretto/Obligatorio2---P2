@@ -87,6 +87,7 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         menu_Varios.setText("Varios");
 
         menuItem_ConsultaDeFamilia.setText("Consulta de familia");
+        menuItem_ConsultaDeFamilia.addActionListener(this::menuItem_ConsultaDeFamiliaActionPerformed);
         menu_Varios.add(menuItem_ConsultaDeFamilia);
 
         menuItem_ConsultaDeDonaciones.setText("Consulta de donaciones");
@@ -174,6 +175,11 @@ public class PaginaPrincipal extends javax.swing.JFrame {
         VentanaSalir ventana = new VentanaSalir();
         ventana.setVisible(true);
     }//GEN-LAST:event_menuItem_SalirActionPerformed
+
+    private void menuItem_ConsultaDeFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_ConsultaDeFamiliaActionPerformed
+        VentanaConsultaDeFamilia ventana = new VentanaConsultaDeFamilia(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_ConsultaDeFamiliaActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new PaginaPrincipal().setVisible(true));

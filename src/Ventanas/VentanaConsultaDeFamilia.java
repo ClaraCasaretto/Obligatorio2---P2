@@ -21,10 +21,10 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
     public VentanaConsultaDeFamilia(Sistema unSistema) {
         sistema = unSistema;
         initComponents();
-        actualizar();
+        actualizarLista();
     }
 
-    public void actualizar(){
+    public void actualizarLista(){
         DefaultTableModel modelo = (DefaultTableModel) tabla_Familias.getModel();
         modelo.setRowCount(0);
         ArrayList<Familia> familias = sistema.getListaFamilias();
@@ -33,7 +33,7 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
             int cantidad = 0;
             ArrayList<Adopcion> adopciones = sistema.getListaAdopciones();
             for (int j = 0; j < adopciones.size(); j++) {
-                Adopcion unaAdopcion = adopciones.get(i);
+                Adopcion unaAdopcion = adopciones.get(j);
                 if(unaAdopcion.getFamilia().getCedula().equals(unaFamilia.getCedula())){
                     cantidad ++;
                 }   
@@ -138,11 +138,11 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void radioButton_CantDeAdopcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_CantDeAdopcionesActionPerformed
-        actualizar();
+        actualizarLista();
     }//GEN-LAST:event_radioButton_CantDeAdopcionesActionPerformed
 
     private void radioButton_ApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_ApellidoActionPerformed
-        actualizar();
+        actualizarLista();
     }//GEN-LAST:event_radioButton_ApellidoActionPerformed
 
     public static void main(String args[]) {

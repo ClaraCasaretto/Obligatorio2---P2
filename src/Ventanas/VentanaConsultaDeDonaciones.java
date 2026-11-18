@@ -20,10 +20,10 @@ public class VentanaConsultaDeDonaciones extends javax.swing.JFrame {
     public VentanaConsultaDeDonaciones(Sistema unSistema) {
         sistema = unSistema;
         initComponents();
-        actualizar();
+        actualizarLista();
     }
     
-    private void actualizar() {
+    private void actualizarLista() {
         //el getModel : Obtiene el modelo que maneja los datos de la tabla
         DefaultTableModel modelo = (DefaultTableModel) table_Donaciones.getModel();
         //Vacía la tabla para que no se repitan donaciones
