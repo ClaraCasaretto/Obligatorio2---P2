@@ -502,7 +502,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_menuItem_ConsultaDeDonacionesActionPerformed
 
     private void menuItem_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_SalirActionPerformed
-        VentanaSalir ventana = new VentanaSalir();
+        VentanaSalir ventana = new VentanaSalir(sistema);
         ventana.setVisible(true);
     }//GEN-LAST:event_menuItem_SalirActionPerformed
 
