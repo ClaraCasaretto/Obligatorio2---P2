@@ -4,6 +4,7 @@
 */
 package Dominio;
 
+import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -266,5 +267,22 @@ public class Sistema {
         }
         
         return errores;
+    }
+   
+    //obtenemos el color correspondiente a cada estado
+    public Color obtenerColorEstado(String estado) {
+        Color color = Color.BLACK;
+        switch (estado) {
+            case "Disponible para adoptar":
+                color = new Color(0, 130, 0);
+                break;
+            case "No disponible para adoptar":
+                color = Color.RED;
+                break;
+            case "Entregado a familia":
+                color = Color.BLUE;
+                break;
+        }
+        return color;
     }
 }

@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.awt.Color;
+import java.awt.Component;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
 
 public class VentanaCambiarEstado extends javax.swing.JFrame implements PropertyChangeListener{
     
@@ -19,12 +22,14 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
     public VentanaCambiarEstado() {
         sistema = new Sistema();
         initComponents();
+        configurarListaAnimales();
     }
     
     public VentanaCambiarEstado(Sistema unSistema) {
         sistema = unSistema;
         initComponents();
         sistema.agregarListener(this);
+        configurarListaAnimales();
         actualizar();
     }
     
@@ -37,6 +42,28 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
                      + " - " + animal.getEstado();
         }
         list_Animales.setListData(datos);
+    }
+    
+    //Hecho con IA
+    private void configurarListaAnimales() {
+        list_Animales.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList<?> list,
+                    Object value,
+                    int index,
+                    boolean isSelected,
+                    boolean cellHasFocus) {
+                super.getListCellRendererComponent(
+                        list, value, index, isSelected, cellHasFocus);
+                ArrayList<Animal> animales = sistema.obtenerAnimalesNoEntregados();
+                if (index >= 0 && index < animales.size()) {
+                    Animal animal = animales.get(index);
+                    setForeground(sistema.obtenerColorEstado(animal.getEstado()));
+                }
+                return this;
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")

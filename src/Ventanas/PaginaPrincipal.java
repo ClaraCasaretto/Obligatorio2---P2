@@ -56,8 +56,6 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         textField_AnimalesAdopcion.setText(""+disponibles);
         textField_AnimalesAdoptados.setText(""+adoptados);
         textField_AnimalesNoDisponibles.setText(""+noDisponibles);
-        //Para la cantidad de adopciones contamos el tamaño de la lista o el contador? 
-        //Porque el contador tiene las anuladas creo
         textField_AdopcionesRegistradas.setText(""+sistema.getListaAdopciones().size());
         textField_EmpresasRegistradas.setText(""+sistema.getListaEmpresas().size());
         actualizarStock();
@@ -97,11 +95,11 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
             Animal animal= sistema.getListaAnimales().get(i);
             datos[i]= animal.getNombre()+ " - "+ animal.getEstado();
         }
-        jList1.setListData(datos);
+        list_ListadoAnimales.setListData(datos);
     }
     //Hecho con IA
     private void configurarListaAnimales(){
-        jList1.setCellRenderer(new DefaultListCellRenderer() {
+        list_ListadoAnimales.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(
                     JList<?> list,
@@ -113,17 +111,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
                         list, value, index, isSelected, cellHasFocus);
                 if (index >= 0 && index < sistema.getListaAnimales().size()) {
                     Animal animal = sistema.getListaAnimales().get(index);
-                    switch (animal.getEstado()) {
-                        case "Disponible para adoptar":
-                            setForeground(new Color(0, 130, 0));
-                            break;
-                        case "No disponible para adoptar":
-                            setForeground(Color.RED);
-                            break;
-                        case "Entregado a familia":
-                            setForeground(Color.BLUE);
-                            break;
-                    }
+                    setForeground(sistema.obtenerColorEstado(animal.getEstado()));
                 }
                 return this;
             }
@@ -135,6 +123,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
     private void initComponents() {
 
         titulo1 = new javax.swing.JLabel();
+        titulo = new javax.swing.JLabel();
         titulo_Animales = new javax.swing.JLabel();
         label_CantidadAnimales = new javax.swing.JLabel();
         textField_CantidadAnimales = new javax.swing.JTextField();
@@ -159,10 +148,9 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         textField_AlimentoPerrosAdultos = new javax.swing.JTextField();
         label_OtrosAlimentos = new javax.swing.JLabel();
         textField_OtrosAlimentos = new javax.swing.JTextField();
+        label_ListadoAnimales = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabel7 = new javax.swing.JLabel();
-        titulo = new javax.swing.JLabel();
+        list_ListadoAnimales = new javax.swing.JList<>();
         MenuBar = new javax.swing.JMenuBar();
         menu_Alta = new javax.swing.JMenu();
         menuItem_Animales = new javax.swing.JMenuItem();
@@ -188,6 +176,11 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         titulo1.setName(""); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        titulo.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo.setText("REFUGIO DE ANIMALES");
+        titulo.setName(""); // NOI18N
 
         titulo_Animales.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         titulo_Animales.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -272,16 +265,11 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         textField_OtrosAlimentos.setEditable(false);
         textField_OtrosAlimentos.setBackground(new java.awt.Color(204, 204, 204));
 
-        jList1.setBackground(new java.awt.Color(204, 204, 204));
-        jScrollPane1.setViewportView(jList1);
+        label_ListadoAnimales.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_ListadoAnimales.setText("Listado de animales:");
 
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel7.setText("Listado de animales:");
-
-        titulo.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo.setText("REFUGIO DE ANIMALES");
-        titulo.setName(""); // NOI18N
+        list_ListadoAnimales.setBackground(new java.awt.Color(204, 204, 204));
+        jScrollPane1.setViewportView(list_ListadoAnimales);
 
         menu_Alta.setText("Alta");
 
@@ -395,7 +383,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
                                             .addComponent(textField_AnimalesNoDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(label_ListadoAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGap(19, 19, 19))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -441,7 +429,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
                             .addComponent(label_EmpresasRegistradas)
                             .addComponent(textField_EmpresasRegistradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(label_ListadoAnimales)
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -545,8 +533,6 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuBar;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label_AdopcionesRegistradas;
     private javax.swing.JLabel label_AlimentoPerrosAdultos;
@@ -557,7 +543,9 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JLabel label_AnimalesNoDisponibles;
     private javax.swing.JLabel label_CantidadAnimales;
     private javax.swing.JLabel label_EmpresasRegistradas;
+    private javax.swing.JLabel label_ListadoAnimales;
     private javax.swing.JLabel label_OtrosAlimentos;
+    private javax.swing.JList<String> list_ListadoAnimales;
     private javax.swing.JMenuItem menuItem_Animales;
     private javax.swing.JMenuItem menuItem_AnularAdopcion;
     private javax.swing.JMenuItem menuItem_Autores;
