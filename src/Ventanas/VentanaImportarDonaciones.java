@@ -6,6 +6,7 @@ package Ventanas;
 import Dominio.Sistema;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
@@ -70,29 +71,32 @@ public class VentanaImportarDonaciones extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(button_Importar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(label_Errores)
-                                    .addComponent(label_ArchivoSeleccionado)
-                                    .addComponent(jScrollPane1))
-                                .addGap(12, 12, 12))
+                                .addComponent(label_Errores)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(textField_Archivo, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                                .addComponent(textField_Archivo)
                                 .addGap(18, 18, 18)
-                                .addComponent(button_Examinar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(button_Examinar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE))))
                 .addGap(42, 42, 42))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(label_ArchivoSeleccionado)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,16 +143,21 @@ public class VentanaImportarDonaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_textField_ArchivoActionPerformed
 
     private void button_ImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ImportarActionPerformed
-        ArrayList<String> errores= sistema.importarDonaciones(nombreArchivo);
-        if(errores.isEmpty()){
-            textArea_Errores.setText("Donaciones importadas sin errores");
-        }else {
-            String listadoErrores= "Se encontraron los siguientes errores; \n";
-            for (String error:errores){
-                listadoErrores+= error + "\n";
+        ArrayList<String> errores = sistema.importarDonaciones(nombreArchivo);
+        if (errores.isEmpty()) {
+            textArea_Errores.setText("");
+            JOptionPane.showMessageDialog(null, "Donaciones importadas correctamente",
+                                          "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String listadoErrores = "Se encontraron los siguientes errores:\n";
+            for (String error : errores) {
+                listadoErrores += error + "\n";
             }
             textArea_Errores.setText(listadoErrores);
+            JOptionPane.showMessageDialog(null, "La importación finalizó con errores",
+                                          "Mensaje de error", JOptionPane.ERROR_MESSAGE);
         }
+        button_Importar.setEnabled(false);
     }//GEN-LAST:event_button_ImportarActionPerformed
 
     public static void main(String args[]) {

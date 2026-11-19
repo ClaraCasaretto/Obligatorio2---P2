@@ -21,65 +21,45 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
     public PaginaPrincipal() {
         sistema = new Sistema();
         initComponents();
-        inicializarPanel();
+        sistema.agregarListener(this);
+        configurarListaAnimales();
+        actualizarResumen();
     }
     
     public PaginaPrincipal(Sistema unSistema) {
         sistema = unSistema;
         initComponents();
-        inicializarPanel();
-    }
-    
-    private void inicializarPanel (){
         sistema.agregarListener(this);
-        
-        jTextField1.setEditable(false);
-        jTextField2.setEditable(false);
-        jTextField3.setEditable(false);
-        jTextField4.setEditable(false);
-        jTextField5.setEditable(false);
-        jTextField6.setEditable(false);
-        jTextField7.setEditable(false);
-        jTextField8.setEditable(false);
-        jTextField9.setEditable(false);
-        jTextField10.setEditable(false);
-        
         configurarListaAnimales();
         actualizarResumen();
     }
     
     private void actualizarResumen(){
         int total= sistema.getListaAnimales().size();
-        
         int disponibles= 0;
         int noDisponibles= 0;
         int adoptados= 0;
-        
         for (Animal animal : sistema.getListaAnimales()){
             switch (animal.getEstado()){
                 case "Disponible para adoptar":
                     disponibles+=1;
                     break;
-                    
                 case "No disponible para adoptar":
                     noDisponibles+=1;
                     break;
-                    
                 case "Entregado a familia":
                     adoptados+=1;
                     break;        
             }
         }
-        
-        jTextField1.setText(""+total);
-        jTextField2.setText(""+disponibles);
-        jTextField3.setText(""+adoptados);
-        jTextField4.setText(""+noDisponibles);
+        textField_CantidadAnimales.setText(""+total);
+        textField_AnimalesAdopcion.setText(""+disponibles);
+        textField_AnimalesAdoptados.setText(""+adoptados);
+        textField_AnimalesNoDisponibles.setText(""+noDisponibles);
         //Para la cantidad de adopciones contamos el tamaño de la lista o el contador? 
         //Porque el contador tiene las anuladas creo
-        jTextField5.setText(""+sistema.getListaAdopciones().size());
-        jTextField6.setText(""+sistema.getListaEmpresas().size());
-        
+        textField_AdopcionesRegistradas.setText(""+sistema.getListaAdopciones().size());
+        textField_EmpresasRegistradas.setText(""+sistema.getListaEmpresas().size());
         actualizarStock();
         actualizarListaAnimales();
     }
@@ -89,7 +69,6 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         double chicos=0;
         double adultos= 0;
         double otros= 0;
-        
         for (Donacion donacion : sistema.getListaDonaciones()){
             switch (donacion.getTipo()) {
                 case "1":
@@ -106,24 +85,20 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
                     break;    
             }
         }
-        
-        jTextField7.setText(""+grandes);
-        jTextField8.setText(""+otros);
-        jTextField9.setText(""+chicos);
-        jTextField10.setText(""+adultos);
-        
+        textField_AlimentoPerrosGrandes.setText(""+grandes);
+        textField_OtrosAlimentos.setText(""+otros);
+        textField_AlimentoPerrosChicos.setText(""+chicos);
+        textField_AlimentoPerrosAdultos.setText(""+adultos);
     }
     
     private void actualizarListaAnimales(){
         String[] datos= new String[sistema.getListaAnimales().size()];
-        
         for (int i= 0; i< sistema.getListaAnimales().size(); i++){
             Animal animal= sistema.getListaAnimales().get(i);
             datos[i]= animal.getNombre()+ " - "+ animal.getEstado();
         }
         jList1.setListData(datos);
     }
-    
     //Hecho con IA
     private void configurarListaAnimales(){
         jList1.setCellRenderer(new DefaultListCellRenderer() {
@@ -134,72 +109,60 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
                     int index,
                     boolean isSelected,
                     boolean cellHasFocus) {
-
                 super.getListCellRendererComponent(
                         list, value, index, isSelected, cellHasFocus);
-                
                 if (index >= 0 && index < sistema.getListaAnimales().size()) {
                     Animal animal = sistema.getListaAnimales().get(index);
-
                     switch (animal.getEstado()) {
-
                         case "Disponible para adoptar":
                             setForeground(new Color(0, 130, 0));
                             break;
-
                         case "No disponible para adoptar":
                             setForeground(Color.RED);
                             break;
-
                         case "Entregado a familia":
                             setForeground(Color.BLUE);
                             break;
                     }
                 }
-
                 return this;
             }
         });
     }
-    
-    @Override
-    public void propertyChange (PropertyChangeEvent evt){
-        actualizarResumen();
-    }
-     
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         titulo1 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        titulo_Animales = new javax.swing.JLabel();
+        label_CantidadAnimales = new javax.swing.JLabel();
+        textField_CantidadAnimales = new javax.swing.JTextField();
+        label_AnimalesAdopcion = new javax.swing.JLabel();
+        textField_AnimalesAdopcion = new javax.swing.JTextField();
+        label_AnimalesAdoptados = new javax.swing.JLabel();
+        textField_AnimalesAdoptados = new javax.swing.JTextField();
+        label_AnimalesNoDisponibles = new javax.swing.JLabel();
+        textField_AnimalesNoDisponibles = new javax.swing.JTextField();
+        titulo_Adopciones = new javax.swing.JLabel();
+        label_AdopcionesRegistradas = new javax.swing.JLabel();
+        textField_AdopcionesRegistradas = new javax.swing.JTextField();
+        titulo_Empresas = new javax.swing.JLabel();
+        label_EmpresasRegistradas = new javax.swing.JLabel();
+        textField_EmpresasRegistradas = new javax.swing.JTextField();
+        titulo_StockAlimentos = new javax.swing.JLabel();
+        label_AlimentoPerrosGrandes = new javax.swing.JLabel();
+        textField_AlimentoPerrosGrandes = new javax.swing.JTextField();
+        label_AlimentoPerrosChicos = new javax.swing.JLabel();
+        textField_AlimentoPerrosChicos = new javax.swing.JTextField();
+        label_AlimentoPerrosAdultos = new javax.swing.JLabel();
+        textField_AlimentoPerrosAdultos = new javax.swing.JTextField();
+        label_OtrosAlimentos = new javax.swing.JLabel();
+        textField_OtrosAlimentos = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jLabel7 = new javax.swing.JLabel();
         titulo = new javax.swing.JLabel();
-        titulo2 = new javax.swing.JLabel();
-        titulo3 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        titulo4 = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
         menu_Alta = new javax.swing.JMenu();
         menuItem_Animales = new javax.swing.JMenuItem();
@@ -226,76 +189,99 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Cantidad de animales:");
+        titulo_Animales.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        titulo_Animales.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo_Animales.setText("Animales");
+        titulo_Animales.setName(""); // NOI18N
 
-        jLabel2.setText("Animales en adopción:");
+        label_CantidadAnimales.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_CantidadAnimales.setText("Cantidad de animales:");
 
-        jLabel3.setText("Animales adoptados:");
+        textField_CantidadAnimales.setEditable(false);
+        textField_CantidadAnimales.setBackground(new java.awt.Color(204, 204, 204));
 
-        jLabel4.setText("Animales no disponibles:");
+        label_AnimalesAdopcion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_AnimalesAdopcion.setText("Animales en adopción:");
 
-        jTextField1.setText("jTextField1");
+        textField_AnimalesAdopcion.setEditable(false);
+        textField_AnimalesAdopcion.setBackground(new java.awt.Color(204, 204, 204));
 
-        jTextField2.setText("jTextField2");
+        label_AnimalesAdoptados.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_AnimalesAdoptados.setText("Animales adoptados:");
 
-        jTextField3.setText("jTextField3");
+        textField_AnimalesAdoptados.setEditable(false);
+        textField_AnimalesAdoptados.setBackground(new java.awt.Color(204, 204, 204));
 
-        jTextField4.setText("jTextField4");
+        label_AnimalesNoDisponibles.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_AnimalesNoDisponibles.setText("Animales no disponibles:");
 
-        jLabel5.setText("Adopciones registradas:");
+        textField_AnimalesNoDisponibles.setEditable(false);
+        textField_AnimalesNoDisponibles.setBackground(new java.awt.Color(204, 204, 204));
+        textField_AnimalesNoDisponibles.addActionListener(this::textField_AnimalesNoDisponiblesActionPerformed);
 
-        jLabel6.setText("Empresas registradas:");
+        titulo_Adopciones.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        titulo_Adopciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo_Adopciones.setText("Adopciones");
+        titulo_Adopciones.setName(""); // NOI18N
 
-        jTextField5.setText("jTextField5");
+        label_AdopcionesRegistradas.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_AdopcionesRegistradas.setText("Adopciones registradas:");
 
-        jTextField6.setText("jTextField6");
-        jTextField6.addActionListener(this::jTextField6ActionPerformed);
+        textField_AdopcionesRegistradas.setEditable(false);
+        textField_AdopcionesRegistradas.setBackground(new java.awt.Color(204, 204, 204));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        titulo_Empresas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        titulo_Empresas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo_Empresas.setText("Empresas");
+        titulo_Empresas.setName(""); // NOI18N
+
+        label_EmpresasRegistradas.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_EmpresasRegistradas.setText("Empresas registradas:");
+
+        textField_EmpresasRegistradas.setEditable(false);
+        textField_EmpresasRegistradas.setBackground(new java.awt.Color(204, 204, 204));
+        textField_EmpresasRegistradas.addActionListener(this::textField_EmpresasRegistradasActionPerformed);
+
+        titulo_StockAlimentos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        titulo_StockAlimentos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo_StockAlimentos.setText("Stock Alimentos");
+        titulo_StockAlimentos.setName(""); // NOI18N
+
+        label_AlimentoPerrosGrandes.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_AlimentoPerrosGrandes.setText("Alimento para perros grandes:");
+
+        textField_AlimentoPerrosGrandes.setEditable(false);
+        textField_AlimentoPerrosGrandes.setBackground(new java.awt.Color(204, 204, 204));
+
+        label_AlimentoPerrosChicos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_AlimentoPerrosChicos.setText("Alimento para perros chicos:");
+
+        textField_AlimentoPerrosChicos.setEditable(false);
+        textField_AlimentoPerrosChicos.setBackground(new java.awt.Color(204, 204, 204));
+        textField_AlimentoPerrosChicos.addActionListener(this::textField_AlimentoPerrosChicosActionPerformed);
+
+        label_AlimentoPerrosAdultos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_AlimentoPerrosAdultos.setText("Alimento para perros adultos:");
+
+        textField_AlimentoPerrosAdultos.setEditable(false);
+        textField_AlimentoPerrosAdultos.setBackground(new java.awt.Color(204, 204, 204));
+
+        label_OtrosAlimentos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_OtrosAlimentos.setText("Otros alimentos:");
+
+        textField_OtrosAlimentos.setEditable(false);
+        textField_OtrosAlimentos.setBackground(new java.awt.Color(204, 204, 204));
+
+        jList1.setBackground(new java.awt.Color(204, 204, 204));
         jScrollPane1.setViewportView(jList1);
 
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel7.setText("Listado de animales:");
 
-        titulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        titulo.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo.setText("Adopciones");
+        titulo.setText("REFUGIO DE ANIMALES");
         titulo.setName(""); // NOI18N
-
-        titulo2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        titulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo2.setText("Animales");
-        titulo2.setName(""); // NOI18N
-
-        titulo3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        titulo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo3.setText("Empresas");
-        titulo3.setName(""); // NOI18N
-
-        jLabel8.setText("Alimento para perros grandes:");
-
-        jLabel9.setText("Alimento para perros chicos:");
-
-        jLabel10.setText("Alimento para perros adultos:");
-
-        jLabel11.setText("Otros alimentos:");
-
-        jTextField7.setText("jTextField7");
-
-        jTextField9.setText("jTextField9");
-        jTextField9.addActionListener(this::jTextField9ActionPerformed);
-
-        jTextField10.setText("jTextField10");
-
-        jTextField8.setText("jTextField8");
-
-        titulo4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        titulo4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo4.setText("Stock Alimentos");
-        titulo4.setName(""); // NOI18N
 
         menu_Alta.setText("Alta");
 
@@ -370,116 +356,113 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(titulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(titulo3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(titulo4, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField9))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5))
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextField1)
-                                        .addComponent(jTextField2)
-                                        .addComponent(jTextField3)
-                                        .addComponent(jTextField4)
-                                        .addComponent(jTextField5)
-                                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(titulo_Animales)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(titulo_Empresas)
+                            .addComponent(titulo_StockAlimentos)
+                            .addComponent(titulo_Adopciones)
+                            .addComponent(label_AdopcionesRegistradas, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel11))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(label_AnimalesNoDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_EmpresasRegistradas, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_AlimentoPerrosGrandes, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_AlimentoPerrosChicos, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_AlimentoPerrosAdultos, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_OtrosAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_AnimalesAdoptados, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_AnimalesAdopcion, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_CantidadAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(47, 47, 47))
+                                    .addComponent(textField_CantidadAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textField_AnimalesAdopcion, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textField_AlimentoPerrosGrandes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textField_AlimentoPerrosChicos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textField_AlimentoPerrosAdultos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(textField_OtrosAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(textField_AnimalesAdoptados, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(textField_EmpresasRegistradas, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(textField_AdopcionesRegistradas, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(textField_AnimalesNoDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(19, 19, 19))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(162, 162, 162))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(titulo2)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(titulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(titulo_Animales)
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_CantidadAnimales)
+                    .addComponent(textField_CantidadAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_AnimalesAdopcion)
+                    .addComponent(textField_AnimalesAdopcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(label_AnimalesAdoptados)
+                            .addComponent(textField_AnimalesAdoptados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
+                            .addComponent(label_AnimalesNoDisponibles)
+                            .addComponent(textField_AnimalesNoDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(titulo_Adopciones)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(label_AdopcionesRegistradas)
+                            .addComponent(textField_AdopcionesRegistradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(titulo_Empresas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_EmpresasRegistradas)
+                            .addComponent(textField_EmpresasRegistradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addGap(22, 22, 22)
-                .addComponent(titulo)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(titulo3)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(titulo4)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
+                .addComponent(titulo_StockAlimentos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_AlimentoPerrosGrandes)
+                    .addComponent(textField_AlimentoPerrosGrandes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(label_AlimentoPerrosChicos)
+                    .addComponent(textField_AlimentoPerrosChicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_AlimentoPerrosAdultos)
+                    .addComponent(textField_AlimentoPerrosAdultos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_OtrosAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textField_OtrosAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -539,18 +522,22 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         VentanaConsultaDeFamilia ventana = new VentanaConsultaDeFamilia(sistema);
         ventana.setVisible(true);
     }//GEN-LAST:event_menuItem_ConsultaDeFamiliaActionPerformed
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void textField_EmpresasRegistradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_EmpresasRegistradasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_textField_EmpresasRegistradasActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+    private void textField_AlimentoPerrosChicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_AlimentoPerrosChicosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
+    }//GEN-LAST:event_textField_AlimentoPerrosChicosActionPerformed
 
     private void menuItem_ImportarDonacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_ImportarDonacionesActionPerformed
         VentanaImportarDonaciones ventana= new VentanaImportarDonaciones(sistema);
         ventana.setVisible(true);
     }//GEN-LAST:event_menuItem_ImportarDonacionesActionPerformed
+
+    private void textField_AnimalesNoDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_AnimalesNoDisponiblesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textField_AnimalesNoDisponiblesActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new PaginaPrincipal().setVisible(true));
@@ -558,29 +545,19 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuBar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel label_AdopcionesRegistradas;
+    private javax.swing.JLabel label_AlimentoPerrosAdultos;
+    private javax.swing.JLabel label_AlimentoPerrosChicos;
+    private javax.swing.JLabel label_AlimentoPerrosGrandes;
+    private javax.swing.JLabel label_AnimalesAdopcion;
+    private javax.swing.JLabel label_AnimalesAdoptados;
+    private javax.swing.JLabel label_AnimalesNoDisponibles;
+    private javax.swing.JLabel label_CantidadAnimales;
+    private javax.swing.JLabel label_EmpresasRegistradas;
+    private javax.swing.JLabel label_OtrosAlimentos;
     private javax.swing.JMenuItem menuItem_Animales;
     private javax.swing.JMenuItem menuItem_AnularAdopcion;
     private javax.swing.JMenuItem menuItem_Autores;
@@ -598,10 +575,26 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenu menu_Alta;
     private javax.swing.JMenu menu_Movimientos;
     private javax.swing.JMenu menu_Varios;
+    private javax.swing.JTextField textField_AdopcionesRegistradas;
+    private javax.swing.JTextField textField_AlimentoPerrosAdultos;
+    private javax.swing.JTextField textField_AlimentoPerrosChicos;
+    private javax.swing.JTextField textField_AlimentoPerrosGrandes;
+    private javax.swing.JTextField textField_AnimalesAdopcion;
+    private javax.swing.JTextField textField_AnimalesAdoptados;
+    private javax.swing.JTextField textField_AnimalesNoDisponibles;
+    private javax.swing.JTextField textField_CantidadAnimales;
+    private javax.swing.JTextField textField_EmpresasRegistradas;
+    private javax.swing.JTextField textField_OtrosAlimentos;
     private javax.swing.JLabel titulo;
     private javax.swing.JLabel titulo1;
-    private javax.swing.JLabel titulo2;
-    private javax.swing.JLabel titulo3;
-    private javax.swing.JLabel titulo4;
+    private javax.swing.JLabel titulo_Adopciones;
+    private javax.swing.JLabel titulo_Animales;
+    private javax.swing.JLabel titulo_Empresas;
+    private javax.swing.JLabel titulo_StockAlimentos;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void propertyChange (PropertyChangeEvent evt){
+        actualizarResumen();
+    }
 }
