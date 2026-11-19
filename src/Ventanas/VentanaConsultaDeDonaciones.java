@@ -54,7 +54,7 @@ public class VentanaConsultaDeDonaciones extends javax.swing.JFrame {
 
         titulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titulo.setText("CONSULTA DE FAMILIA");
+        titulo.setText("CONSULTA DE DONACIONES");
         titulo.setName(""); // NOI18N
 
         table_Donaciones.setModel(new javax.swing.table.DefaultTableModel(

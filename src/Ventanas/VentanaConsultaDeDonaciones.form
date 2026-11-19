@@ -54,7 +54,7 @@
           <Font name="Segoe UI" size="18" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="CONSULTA DE FAMILIA"/>
+        <Property name="text" type="java.lang.String" value="CONSULTA DE DONACIONES"/>
         <Property name="name" type="java.lang.String" value="" noResource="true"/>
       </Properties>
     </Component>
