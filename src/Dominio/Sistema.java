@@ -7,13 +7,19 @@ package Dominio;
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import lecturaEscrituraArchivos.ArchivoLectura;
 import lecturaEscrituraArchivos.ArchivoGrabacion;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
-public class Sistema {
+public class Sistema implements Serializable{
     private ArrayList<Animal>listaAnimales;
     private ArrayList<Familia> listaFamilias;
     private ArrayList<Empresa> listaEmpresas;
@@ -319,5 +325,34 @@ public class Sistema {
             });
         }
         return familias;
+    }
+    
+    
+    //Serializar 
+    //Guarda todos los datos del sistema en el archivo datos.ser.
+    public void guardarDatos() throws IOException {
+        FileOutputStream archivo = new FileOutputStream("datos.ser");
+        ObjectOutputStream salida = new ObjectOutputStream(archivo);
+        salida.writeObject(listaAnimales);
+        salida.writeObject(listaFamilias);
+        salida.writeObject(listaEmpresas);
+        salida.writeObject(listaAdopciones);
+        salida.writeObject(contadorAdopcion);
+        salida.writeObject(listaDonaciones);
+        salida.writeObject(contadorDonacion);
+        salida.close();
+    }
+    
+    public void recuperarDatos() throws IOException, ClassNotFoundException {
+        FileInputStream archivo = new FileInputStream("datos.ser");
+        ObjectInputStream entrada = new ObjectInputStream(archivo);
+        listaAnimales = (ArrayList<Animal>) entrada.readObject();
+        listaFamilias = (ArrayList<Familia>) entrada.readObject();
+        listaEmpresas = (ArrayList<Empresa>) entrada.readObject();
+        listaAdopciones = (ArrayList<Adopcion>) entrada.readObject();
+        contadorAdopcion = (Integer) entrada.readObject();
+        listaDonaciones = (ArrayList<Donacion>) entrada.readObject();
+        contadorDonacion = (Integer) entrada.readObject();
+        entrada.close();
     }
 }

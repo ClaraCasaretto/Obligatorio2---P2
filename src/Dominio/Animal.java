@@ -3,8 +3,9 @@
 * Clara Casaretto - N°: 250991
 */
 package Dominio;
+import java.io.Serializable;
 
-public class Animal {
+public class Animal implements Serializable{
     private String codigo;
     private String nombre;
     private String temperamento;

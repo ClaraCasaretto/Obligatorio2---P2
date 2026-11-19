@@ -3,13 +3,22 @@
 * Clara Casaretto - N°: 250991
 */
 package Ventanas;
+import javax.swing.JOptionPane;
+import Dominio.Sistema;
+import java.io.IOException;
 
 public class VentanaSalir extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaSalir.class.getName());
-
+    private Sistema sistema;
+    
     public VentanaSalir() {
         initComponents();
+    }
+    
+    public VentanaSalir(Sistema unSistema) {
+        initComponents();
+        sistema = unSistema;
     }
 
     @SuppressWarnings("unchecked")
@@ -19,8 +28,8 @@ public class VentanaSalir extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        button_Si = new javax.swing.JButton();
+        button_Cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -30,11 +39,11 @@ public class VentanaSalir extends javax.swing.JFrame {
 
         jLabel3.setText("Confirmar salida");
 
-        jButton1.setText("Si, salir");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        button_Si.setText("Si, salir");
+        button_Si.addActionListener(this::button_SiActionPerformed);
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        button_Cancelar.setText("Cancelar");
+        button_Cancelar.addActionListener(this::button_CancelarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -51,9 +60,9 @@ public class VentanaSalir extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(70, 70, 70))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(button_Cancelar)
                         .addGap(98, 98, 98)
-                        .addComponent(jButton1)
+                        .addComponent(button_Si)
                         .addGap(67, 67, 67)))
                 .addGap(81, 81, 81))
         );
@@ -68,29 +77,34 @@ public class VentanaSalir extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(button_Si)
+                    .addComponent(button_Cancelar))
                 .addContainerGap(95, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void button_SiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_SiActionPerformed
+        try {
+            sistema.guardarDatos();
+            System.exit(0);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar los datos");
+        }
+    }//GEN-LAST:event_button_SiActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void button_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_CancelarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_button_CancelarActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new VentanaSalir().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton button_Cancelar;
+    private javax.swing.JButton button_Si;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

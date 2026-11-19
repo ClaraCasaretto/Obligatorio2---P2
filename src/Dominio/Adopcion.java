@@ -3,8 +3,9 @@
 * Clara Casaretto - N°: 250991
 */
 package Dominio;
+import java.io.Serializable;
 
-public class Adopcion {
+public class Adopcion implements Serializable {
     private int numero;
     private Animal animal;
     private Familia familia;

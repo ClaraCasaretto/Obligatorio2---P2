@@ -175,7 +175,12 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         titulo1.setText("Stock de alimento");
         titulo1.setName(""); // NOI18N
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         titulo.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -502,7 +507,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_menuItem_ConsultaDeDonacionesActionPerformed
 
     private void menuItem_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_SalirActionPerformed
-        VentanaSalir ventana = new VentanaSalir();
+        VentanaSalir ventana = new VentanaSalir(sistema);
         ventana.setVisible(true);
     }//GEN-LAST:event_menuItem_SalirActionPerformed
 
@@ -526,6 +531,11 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
     private void textField_AnimalesNoDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_AnimalesNoDisponiblesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textField_AnimalesNoDisponiblesActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        VentanaSalir ventana = new VentanaSalir(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new PaginaPrincipal().setVisible(true));
