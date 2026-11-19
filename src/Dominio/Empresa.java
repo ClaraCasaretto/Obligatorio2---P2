@@ -3,8 +3,9 @@
 * Clara Casaretto - N°: 250991
 */
 package Dominio;
+import java.io.Serializable;
 
-public class Empresa {
+public class Empresa implements Serializable{
     private String nombre;
     private String rut;
     private String direccion;

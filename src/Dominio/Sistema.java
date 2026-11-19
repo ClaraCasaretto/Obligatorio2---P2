@@ -7,13 +7,14 @@ package Dominio;
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import lecturaEscrituraArchivos.ArchivoLectura;
 import lecturaEscrituraArchivos.ArchivoGrabacion;
 
-public class Sistema {
+public class Sistema implements Serializable{
     private ArrayList<Animal>listaAnimales;
     private ArrayList<Familia> listaFamilias;
     private ArrayList<Empresa> listaEmpresas;
