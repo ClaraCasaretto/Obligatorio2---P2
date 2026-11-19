@@ -90,6 +90,10 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="radioButton_Apellido">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="buttonGroup_OrdenarPor"/>
+        </Property>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Apellido (A - Z)"/>
       </Properties>
       <Events>
@@ -98,6 +102,9 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="radioButton_CantDeAdopciones">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="buttonGroup_OrdenarPor"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cantidad de adopciones (Mayor a menor)"/>
       </Properties>
       <Events>

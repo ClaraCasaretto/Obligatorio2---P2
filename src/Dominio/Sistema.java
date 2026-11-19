@@ -4,9 +4,12 @@
 */
 package Dominio;
 
+import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import lecturaEscrituraArchivos.ArchivoLectura;
 import lecturaEscrituraArchivos.ArchivoGrabacion;
 
@@ -266,5 +269,55 @@ public class Sistema {
         }
         
         return errores;
+    }
+   
+    //obtenemos el color correspondiente a cada estado
+    public Color obtenerColorEstado(String estado) {
+        Color color = Color.BLACK;
+        switch (estado) {
+            case "Disponible para adoptar":
+                color = new Color(0, 130, 0);
+                break;
+            case "No disponible para adoptar":
+                color = Color.RED;
+                break;
+            case "Entregado a familia":
+                color = Color.BLUE;
+                break;
+        }
+        return color;
+    }
+    
+    //Para ventana consulta de familia: Quenta cuántas adopciones tiene una familia.
+    public int cantidadAdopcionesFamilia(Familia unaFamilia) {
+        int cantidad = 0;
+        for (Adopcion unaAdopcion : listaAdopciones) {
+            if (unaAdopcion.getFamilia().getCedula().equals(unaFamilia.getCedula())) {
+                cantidad++;
+            }
+        }
+        return cantidad;
+    }
+    
+    //Para ventana consulta de familia: Ordena las familias por apellido o por cantidad de adopciones, según lo seleccionado.
+    public ArrayList<Familia> obtenerFamiliasOrdenadas(boolean porApellido) {
+        ArrayList<Familia> familias = new ArrayList<>(listaFamilias);
+        if (porApellido) {
+            Collections.sort(familias, new Comparator<Familia>() {
+                @Override
+                public int compare(Familia f1, Familia f2) {
+                    return f1.getApellido().compareToIgnoreCase(f2.getApellido());
+                }
+            });
+        } else {
+            Collections.sort(familias, new Comparator<Familia>() {
+                @Override
+                public int compare(Familia f1, Familia f2) {
+                    return cantidadAdopcionesFamilia(f2)
+                            - cantidadAdopcionesFamilia(f1);
+                }
+            });
+        }
+        return familias;
     }
 }

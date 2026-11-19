@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.awt.Color;
+import java.awt.Component;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
 
 public class VentanaCambiarEstado extends javax.swing.JFrame implements PropertyChangeListener{
     
@@ -19,12 +21,14 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
     public VentanaCambiarEstado() {
         sistema = new Sistema();
         initComponents();
+        configurarListaAnimales();
     }
     
     public VentanaCambiarEstado(Sistema unSistema) {
         sistema = unSistema;
         initComponents();
         sistema.agregarListener(this);
+        configurarListaAnimales();
         actualizar();
     }
     
@@ -38,13 +42,35 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
         }
         list_Animales.setListData(datos);
     }
+    
+    //Hecho con IA
+    private void configurarListaAnimales() {
+        list_Animales.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList<?> list,
+                    Object value,
+                    int index,
+                    boolean isSelected,
+                    boolean cellHasFocus) {
+                super.getListCellRendererComponent(
+                        list, value, index, isSelected, cellHasFocus);
+                ArrayList<Animal> animales = sistema.obtenerAnimalesNoEntregados();
+                if (index >= 0 && index < animales.size()) {
+                    Animal animal = animales.get(index);
+                    setForeground(sistema.obtenerColorEstado(animal.getEstado()));
+                }
+                return this;
+            }
+        });
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         titulo = new javax.swing.JLabel();
-        label_AnimalesDisponibles = new javax.swing.JLabel();
+        label_AnimalesNoEntregados = new javax.swing.JLabel();
         jList_Animales = new javax.swing.JScrollPane();
         list_Animales = new javax.swing.JList<>();
         label_Datos = new javax.swing.JLabel();
@@ -71,9 +97,9 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
         getContentPane().add(titulo);
         titulo.setBounds(237, 6, 157, 25);
 
-        label_AnimalesDisponibles.setText("Animales disponibles:");
-        getContentPane().add(label_AnimalesDisponibles);
-        label_AnimalesDisponibles.setBounds(6, 43, 170, 16);
+        label_AnimalesNoEntregados.setText("Animales no entregados:");
+        getContentPane().add(label_AnimalesNoEntregados);
+        label_AnimalesNoEntregados.setBounds(6, 43, 170, 16);
 
         list_Animales.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list_Animales.addListSelectionListener(this::list_AnimalesValueChanged);
@@ -154,11 +180,7 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
             textField_Temperamento.setText(animal.getTemperamento());
             textField_Peso.setText("" +animal.getPeso());
             textField_EstadoActual.setText(animal.getEstado());
-            if (animal.getEstado().equals("Disponible para adoptar")) {
-                textField_EstadoActual.setForeground(new Color(0, 128, 0));
-            } else {
-                textField_EstadoActual.setForeground(new Color(255, 0, 0));
-            }
+            textField_EstadoActual.setForeground(sistema.obtenerColorEstado(animal.getEstado()));
         }else{
             textField_Codigo.setText("");
             textField_Nombre.setText("");
@@ -197,7 +219,6 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
             ArrayList<Animal> animales = sistema.obtenerAnimalesNoEntregados();
             Animal animal = animales.get(posicion);
             sistema.cambiarEstadoAnimal(animal);
-            actualizar();
             JOptionPane.showMessageDialog(null,"Estado cambiado correctamente",
                                           "Cambiar estado", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -210,7 +231,7 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_Cambiar;
     private javax.swing.JScrollPane jList_Animales;
-    private javax.swing.JLabel label_AnimalesDisponibles;
+    private javax.swing.JLabel label_AnimalesNoEntregados;
     private javax.swing.JLabel label_Codigo;
     private javax.swing.JLabel label_Datos;
     private javax.swing.JLabel label_EstadoActual;
