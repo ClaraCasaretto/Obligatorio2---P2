@@ -179,7 +179,6 @@
                           <Component id="titulo_Empresas" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="titulo_StockAlimentos" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="titulo_Adopciones" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="label_AdopcionesRegistradas" min="-2" pref="145" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -192,6 +191,7 @@
                                   <Component id="label_AnimalesAdoptados" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                                   <Component id="label_AnimalesAdopcion" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                                   <Component id="label_CantidadAnimales" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="label_AdopcionesRegistradas" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">

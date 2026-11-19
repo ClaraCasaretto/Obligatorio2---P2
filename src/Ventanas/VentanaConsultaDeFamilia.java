@@ -3,7 +3,6 @@
 * Clara Casaretto - N°: 250991
 */
 package Ventanas;
-import Dominio.Adopcion;
 import Dominio.Familia;
 import Dominio.Sistema;
 import java.util.ArrayList;
@@ -23,25 +22,18 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
         initComponents();
         actualizarLista();
     }
-
-    public void actualizarLista(){
+    
+    public void actualizarLista() {
         DefaultTableModel modelo = (DefaultTableModel) tabla_Familias.getModel();
         modelo.setRowCount(0);
-        ArrayList<Familia> familias = sistema.getListaFamilias();
+        ArrayList<Familia> familias = sistema.obtenerFamiliasOrdenadas(radioButton_Apellido.isSelected());
         for (int i = 0; i < familias.size(); i++) {
             Familia unaFamilia = familias.get(i);
-            int cantidad = 0;
-            ArrayList<Adopcion> adopciones = sistema.getListaAdopciones();
-            for (int j = 0; j < adopciones.size(); j++) {
-                Adopcion unaAdopcion = adopciones.get(j);
-                if(unaAdopcion.getFamilia().getCedula().equals(unaFamilia.getCedula())){
-                    cantidad ++;
-                }   
-            }
+            int cantidad = sistema.cantidadAdopcionesFamilia(unaFamilia);
             Object[] fila = {
                 unaFamilia.getApellido(),
                 unaFamilia.getCedula(),
-                0
+                cantidad
             };
             modelo.addRow(fila);
         }
@@ -68,9 +60,12 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
 
         label_Datos.setText("Ordenar por:");
 
+        buttonGroup_OrdenarPor.add(radioButton_Apellido);
+        radioButton_Apellido.setSelected(true);
         radioButton_Apellido.setText("Apellido (A - Z)");
         radioButton_Apellido.addActionListener(this::radioButton_ApellidoActionPerformed);
 
+        buttonGroup_OrdenarPor.add(radioButton_CantDeAdopciones);
         radioButton_CantDeAdopciones.setText("Cantidad de adopciones (Mayor a menor)");
         radioButton_CantDeAdopciones.addActionListener(this::radioButton_CantDeAdopcionesActionPerformed);
 
