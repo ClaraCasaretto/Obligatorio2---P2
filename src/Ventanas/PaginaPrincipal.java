@@ -330,6 +330,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         menu_Varios.add(menuItem_GeneracionDePagina);
 
         menuItem_RecuperarDatos.setText("Recuperar datos");
+        menuItem_RecuperarDatos.addActionListener(this::menuItem_RecuperarDatosActionPerformed);
         menu_Varios.add(menuItem_RecuperarDatos);
 
         menuItem_Autores.setText("Autores");
@@ -536,6 +537,11 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         VentanaSalir ventana = new VentanaSalir(sistema);
         ventana.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void menuItem_RecuperarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_RecuperarDatosActionPerformed
+        VentanaRecuperarDatos ventana = new VentanaRecuperarDatos(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_RecuperarDatosActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new PaginaPrincipal().setVisible(true));
