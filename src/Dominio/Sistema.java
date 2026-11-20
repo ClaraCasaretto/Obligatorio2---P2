@@ -354,5 +354,10 @@ public class Sistema implements Serializable{
         listaDonaciones = (ArrayList<Donacion>) entrada.readObject();
         contadorDonacion = (Integer) entrada.readObject();
         entrada.close();
+        actualizandoCambios.firePropertyChange("listaAnimales", null, listaAnimales);
+        actualizandoCambios.firePropertyChange("listaFamilias", null, listaFamilias);
+        actualizandoCambios.firePropertyChange("listaEmpresas", null, listaEmpresas);
+        actualizandoCambios.firePropertyChange("listaAdopciones", null, listaAdopciones);
+        actualizandoCambios.firePropertyChange("listaDonaciones", null, listaDonaciones);
     }
 }
