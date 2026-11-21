@@ -96,6 +96,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Varios"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_VariosActionPerformed"/>
+          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menuItem_ConsultaDeFamilia">
               <Properties>
@@ -117,6 +120,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Generaci&#xf3;n de p&#xe1;gina"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItem_GeneracionDePaginaActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItem_RecuperarDatos">
               <Properties>

@@ -317,6 +317,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         MenuBar.add(menu_Movimientos);
 
         menu_Varios.setText("Varios");
+        menu_Varios.addActionListener(this::menu_VariosActionPerformed);
 
         menuItem_ConsultaDeFamilia.setText("Consulta de familia");
         menuItem_ConsultaDeFamilia.addActionListener(this::menuItem_ConsultaDeFamiliaActionPerformed);
@@ -327,6 +328,7 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         menu_Varios.add(menuItem_ConsultaDeDonaciones);
 
         menuItem_GeneracionDePagina.setText("Generación de página");
+        menuItem_GeneracionDePagina.addActionListener(this::menuItem_GeneracionDePaginaActionPerformed);
         menu_Varios.add(menuItem_GeneracionDePagina);
 
         menuItem_RecuperarDatos.setText("Recuperar datos");
@@ -542,6 +544,15 @@ public class PaginaPrincipal extends javax.swing.JFrame implements PropertyChang
         VentanaRecuperarDatos ventana = new VentanaRecuperarDatos(sistema);
         ventana.setVisible(true);
     }//GEN-LAST:event_menuItem_RecuperarDatosActionPerformed
+
+    private void menu_VariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_VariosActionPerformed
+        
+    }//GEN-LAST:event_menu_VariosActionPerformed
+
+    private void menuItem_GeneracionDePaginaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItem_GeneracionDePaginaActionPerformed
+        VentanaGenerarHTML ventana= new VentanaGenerarHTML(sistema);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_menuItem_GeneracionDePaginaActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new PaginaPrincipal().setVisible(true));
