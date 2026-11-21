@@ -360,4 +360,45 @@ public class Sistema implements Serializable{
         actualizandoCambios.firePropertyChange("listaAdopciones", null, listaAdopciones);
         actualizandoCambios.firePropertyChange("listaDonaciones", null, listaDonaciones);
     }
+    
+    public void generarHTML (String nombreArchivo){
+        if (!nombreArchivo.toLowerCase().endsWith(".html")){
+            nombreArchivo+= ".html";
+        }
+        boolean sinAdopciones= false;
+        ArchivoGrabacion archivoHtml= new ArchivoGrabacion(nombreArchivo);
+        ArrayList <Adopcion> adopciones= new ArrayList<>(listaAdopciones);
+        adopciones.sort((a1, a2)-> Integer.compare(a1.getNumero(), a2.getNumero()));
+        archivoHtml.grabarLinea("<html>");
+        archivoHtml.grabarLinea("<body>");
+        archivoHtml.grabarLinea("<h1>Registro de adopciones</h1>");
+        
+        if (adopciones.isEmpty()){
+            archivoHtml.grabarLinea("<p>No hay adopciones registradas.</p>");
+        }else{            
+            archivoHtml.grabarLinea("<table>");
+            
+            archivoHtml.grabarLinea("<tr>");
+            archivoHtml.grabarLinea("<th>Numero</th>");
+            archivoHtml.grabarLinea("<th>Animal</th>");
+            archivoHtml.grabarLinea("<th>Familia</th>");
+            archivoHtml.grabarLinea("<th>Comentarios</th>");
+            archivoHtml.grabarLinea("</tr>");
+            
+            for(Adopcion adopcion: adopciones){
+                archivoHtml.grabarLinea("<tr>");
+                archivoHtml.grabarLinea("<td>"+adopcion.getNumero()+"</td>");
+                archivoHtml.grabarLinea("<td>"+adopcion.getAnimal().getNombre()+"</td>");
+                archivoHtml.grabarLinea("<td>"+adopcion.getFamilia().getApellido()+"</td>");
+                archivoHtml.grabarLinea("<td>"+adopcion.getComentarios()+"</td>");
+                archivoHtml.grabarLinea("</tr>");
+            }
+            
+            archivoHtml.grabarLinea("<table>");
+        }
+        
+        archivoHtml.grabarLinea("</html>");
+        archivoHtml.grabarLinea("</body>");
+        archivoHtml.cerrar();
+    }
 }
