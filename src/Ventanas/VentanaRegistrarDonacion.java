@@ -7,8 +7,10 @@ import Dominio.Empresa;
 import Dominio.Sistema;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class VentanaRegistrarDonacion extends javax.swing.JFrame {
+public class VentanaRegistrarDonacion extends javax.swing.JFrame implements PropertyChangeListener {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaRegistrarDonacion.class.getName());
     private Sistema sistema;
@@ -21,6 +23,7 @@ public class VentanaRegistrarDonacion extends javax.swing.JFrame {
     public VentanaRegistrarDonacion(Sistema unSistema) {
         sistema = unSistema;
         initComponents();
+        sistema.agregarListener(this);
         actualizar();
     }
     
@@ -187,7 +190,6 @@ public class VentanaRegistrarDonacion extends javax.swing.JFrame {
         }else if(radioButton_Otros.isSelected()){
             tipo = "4";
         }
-        
         if(posicionEmpresa == -1){
             JOptionPane.showMessageDialog(null, "Seleccione una empresa",
                                           "Mensaje de error", JOptionPane.ERROR_MESSAGE);
@@ -203,27 +205,20 @@ public class VentanaRegistrarDonacion extends javax.swing.JFrame {
         else {
             try {
                 double kilos = Double.parseDouble(kilosTexto);
-
                 if (kilos <= 0) {
                     JOptionPane.showMessageDialog(null,
                             "La cantidad de kilos debe ser mayor a cero",
                             "Mensaje de error", JOptionPane.ERROR_MESSAGE);
-
                 } else {
                     Empresa empresa = sistema.getListaEmpresas().get(posicionEmpresa);
-
                     sistema.agregarDonacion(empresa, tipo, kilos);
-
                     JOptionPane.showMessageDialog(null,
                             "Donación registrada correctamente",
                             "Registrar donación", JOptionPane.INFORMATION_MESSAGE);
 
                     textField_CantidadDeKilos.setText("");
                     buttonGroup_TipoAlimento.clearSelection();
-
-                    actualizar();
                 }
-
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null,
                         "Ingrese una cantidad de kilos válida",
@@ -265,4 +260,15 @@ public class VentanaRegistrarDonacion extends javax.swing.JFrame {
     private javax.swing.JTextField textField_NumeroAdopcion;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("listaEmpresas")) {
+            actualizar();
+        }
+
+        if (evt.getPropertyName().equals("listaDonaciones")) {
+            textField_NumeroAdopcion.setText("" + sistema.getContadorDonacion());
+        }
+    }
 }
