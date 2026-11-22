@@ -5,10 +5,12 @@
 package Ventanas;
 import Dominio.Familia;
 import Dominio.Sistema;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
-public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
+public class VentanaConsultaDeFamilia extends javax.swing.JFrame implements PropertyChangeListener {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaConsultaDeFamilia.class.getName());
     private Sistema sistema;
@@ -20,6 +22,7 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
     public VentanaConsultaDeFamilia(Sistema unSistema) {
         sistema = unSistema;
         initComponents();
+        sistema.agregarListener(this);
         actualizarLista();
     }
     
@@ -153,4 +156,13 @@ public class VentanaConsultaDeFamilia extends javax.swing.JFrame {
     private javax.swing.JTable tabla_Familias;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("listaFamilias")
+                || evt.getPropertyName().equals("listaAdopciones")) {
+            actualizarLista();
+        }
+    }
+
 }

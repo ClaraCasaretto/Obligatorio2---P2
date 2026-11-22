@@ -7,8 +7,10 @@ import Dominio.Sistema;
 import Dominio.Donacion;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class VentanaConsultaDeDonaciones extends javax.swing.JFrame {
+public class VentanaConsultaDeDonaciones extends javax.swing.JFrame implements PropertyChangeListener {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaConsultaDeDonaciones.class.getName());
     private Sistema sistema;
@@ -20,6 +22,7 @@ public class VentanaConsultaDeDonaciones extends javax.swing.JFrame {
     public VentanaConsultaDeDonaciones(Sistema unSistema) {
         sistema = unSistema;
         initComponents();
+        sistema.agregarListener(this);
         actualizarLista();
     }
     
@@ -28,7 +31,7 @@ public class VentanaConsultaDeDonaciones extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) table_Donaciones.getModel();
         //Vacía la tabla para que no se repitan donaciones
         modelo.setRowCount(0);
-        ArrayList<Donacion> donaciones = sistema.getListaDonaciones();
+        ArrayList<Donacion> donaciones = sistema.obtenerDonacionesOrdenadas();
         for (int i = 0; i < donaciones.size(); i++) {
             Donacion unaDonacion = donaciones.get(i);
             //Prepara los cuatro datos de cada donación: número, empresa, tipo y kilos.
@@ -110,4 +113,11 @@ public class VentanaConsultaDeDonaciones extends javax.swing.JFrame {
     private javax.swing.JTable table_Donaciones;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("listaDonaciones")) {
+            actualizarLista();
+        }
+    }
 }

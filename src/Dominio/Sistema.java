@@ -87,6 +87,7 @@ public class Sistema implements Serializable{
        
     public void agregarFamilia(Familia unaFamilia) {
         listaFamilias.add(unaFamilia);
+        actualizandoCambios.firePropertyChange("listaFamilias", null, unaFamilia);
     }
     
     public ArrayList<Animal> obtenerAnimalesDisponibles() {
@@ -207,6 +208,17 @@ public class Sistema implements Serializable{
         listaDonaciones.add(donacion);
         contadorDonacion++;
         actualizandoCambios.firePropertyChange("listaDonaciones", null, donacion);
+    }
+    
+    public ArrayList<Donacion> obtenerDonacionesOrdenadas() {
+        ArrayList<Donacion> donaciones = new ArrayList<>(listaDonaciones);
+        Collections.sort(donaciones, new Comparator<Donacion>() {
+            @Override
+            public int compare(Donacion d1, Donacion d2) {
+                return Integer.compare(d1.getNumero(), d2.getNumero());
+            }
+        });
+        return donaciones;
     }
     
     public ArrayList<String> importarDonaciones(String nombreArchivo){
