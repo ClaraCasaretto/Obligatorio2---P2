@@ -59,8 +59,5 @@ public class Animal implements Serializable{
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
-    
-    
+  
 }

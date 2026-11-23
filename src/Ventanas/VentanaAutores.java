@@ -17,6 +17,7 @@ public class VentanaAutores extends javax.swing.JFrame {
         cargarFoto();
     }
     
+    //Asistido por Chat GPT
     private void cargarFoto() {
         ImageIcon fotoClara = new ImageIcon(
                 getClass().getResource("/Ventanas/clara.jpeg"));

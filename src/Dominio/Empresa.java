@@ -40,7 +40,4 @@ public class Empresa implements Serializable{
         this.direccion = direccion;
     }
     
-    
-    
-    
 }

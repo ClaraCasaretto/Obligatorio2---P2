@@ -365,7 +365,6 @@ public class Sistema implements Serializable{
         if (!nombreArchivo.toLowerCase().endsWith(".html")){
             nombreArchivo+= ".html";
         }
-        boolean sinAdopciones= false;
         ArchivoGrabacion archivoHtml= new ArchivoGrabacion(nombreArchivo);
         ArrayList <Adopcion> adopciones= new ArrayList<>(listaAdopciones);
         adopciones.sort((a1, a2)-> Integer.compare(a1.getNumero(), a2.getNumero()));
@@ -379,7 +378,7 @@ public class Sistema implements Serializable{
             archivoHtml.grabarLinea("<table>");
             
             archivoHtml.grabarLinea("<tr>");
-            archivoHtml.grabarLinea("<th>Numero</th>");
+            archivoHtml.grabarLinea("<th>Codigo</th>");
             archivoHtml.grabarLinea("<th>Animal</th>");
             archivoHtml.grabarLinea("<th>Familia</th>");
             archivoHtml.grabarLinea("<th>Comentarios</th>");

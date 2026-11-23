@@ -49,6 +49,5 @@ public class Donacion implements Serializable{
     public void setCantKilos(double cantKilos) {
         this.cantKilos = cantKilos;
     }
-    
-    
+        
 }

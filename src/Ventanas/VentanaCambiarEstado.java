@@ -43,7 +43,7 @@ public class VentanaCambiarEstado extends javax.swing.JFrame implements Property
         list_Animales.setListData(datos);
     }
     
-    //Hecho con IA
+    //Asistido por Chat GPT
     private void configurarListaAnimales() {
         list_Animales.setCellRenderer(new DefaultListCellRenderer() {
             @Override

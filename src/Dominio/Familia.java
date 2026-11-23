@@ -40,8 +40,4 @@ public class Familia implements Serializable{
         this.celular = celular;
     }
     
-    
-    
-    
-    
 }
