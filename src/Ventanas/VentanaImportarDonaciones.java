@@ -122,7 +122,7 @@ public class VentanaImportarDonaciones extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_ExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ExaminarActionPerformed
-        //ayudado por chatGPT con el tema de seleccionar el archivo
+        //Asistido por chatGPT con el tema de seleccionar el archivo
         JFileChooser selector = new JFileChooser();
         selector.setDialogTitle("Seleccionar archivo de donaciones");
         FileNameExtensionFilter filtro =

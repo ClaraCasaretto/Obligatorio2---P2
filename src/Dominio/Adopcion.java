@@ -49,7 +49,5 @@ public class Adopcion implements Serializable {
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
     }
-    
-    
-    
+ 
 }

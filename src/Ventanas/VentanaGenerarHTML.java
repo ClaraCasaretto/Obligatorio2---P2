@@ -5,7 +5,6 @@
 package Ventanas;
 
 import Dominio.Sistema;
-import java.awt.Button;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -18,9 +17,7 @@ public class VentanaGenerarHTML extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaGenerarHTML.class.getName());
     private Sistema sistema;
     private String nombreArchivo;
-    /**
-     * Creates new form VentanaGenerarHTML
-     */
+
     public VentanaGenerarHTML() {
         sistema= new Sistema();
         initComponents();
